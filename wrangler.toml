@@ -2,3 +2,15 @@ name = "christmas"
 compatibility_date = "2024-12-24"
 pages_build_output_dir = "."
 
+# D1 Database Binding
+[[d1_databases]]
+binding = "DB"
+database_name = "christmas-blessings"
+database_id = "christmas-blessings-db"
+
+# Worker configuration
+[env.production]
+name = "christmas-api"
+routes = [
+  { pattern = "https://christmas-dvs.pages.dev/api/*", zone_name = "pages.dev" }
+]

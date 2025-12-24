@@ -26,13 +26,25 @@
         body {
             font-family: 'Noto Sans TC', sans-serif;
             overflow-x: hidden;
-            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1a472a, #2d5a3f);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(180deg,
+                #0a0f1e 0%,
+                #1a2a3f 20%,
+                #2d5a3f 40%,
+                #1a472a 60%,
+                #2a1a0f 80%,
+                #0f0a05 100%
+            );
+            background-size: 100% 400%;
+            animation: gradientVertical 20s ease infinite;
             min-height: 100vh;
             position: relative;
-            transition: background 1s ease;
             cursor: default;
+        }
+
+        @keyframes gradientVertical {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
         }
 
         @keyframes gradientBG {
@@ -72,11 +84,39 @@
         }
 
         body.christmas-eve {
-            background: linear-gradient(135deg, #0f2a1a 0%, #1a3d2f 50%, #0f2a1a 100%);
+            background: linear-gradient(180deg,
+                #0a1f1a 0%,
+                #1a3d2f 25%,
+                #0f4a3a 50%,
+                #1a5d4f 75%,
+                #0a3f2a 100%
+            );
+            background-size: 100% 300%;
+            animation: gradientVertical 15s ease infinite;
         }
 
         body.christmas-day {
-            background: linear-gradient(135deg, #2a1a0f 0%, #3d2f1a 50%, #2a1a0f 100%);
+            background: linear-gradient(180deg,
+                #2a1a0f 0%,
+                #4a2f1f 25%,
+                #6a3f2f 50%,
+                #4a2f1f 75%,
+                #2a1a0f 100%
+            );
+            background-size: 100% 300%;
+            animation: gradientVertical 15s ease infinite;
+        }
+
+        body.newyear {
+            background: linear-gradient(180deg,
+                #1a0a2e 0%,
+                #3a1a5e 25%,
+                #6a2a8e 50%,
+                #3a1a5e 75%,
+                #1a0a2e 100%
+            );
+            background-size: 100% 300%;
+            animation: gradientVertical 15s ease infinite;
         }
 
         /* 雪花效果 */
@@ -198,7 +238,7 @@
 
         /* 時間顯示區塊 */
         .countdown-container {
-            margin: 30px 0;
+            margin: 30px auto;
             padding: 25px;
             background: rgba(255, 255, 255, 0.15);
             border-radius: 25px;
@@ -207,6 +247,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.8s ease-out;
             min-width: 300px;
+            max-width: 600px;
         }
 
         @keyframes slideIn {
@@ -291,12 +332,13 @@
 
         /* 活動卡片 */
         .activities-card {
-            margin-top: 30px;
+            margin: 30px auto;
             padding: 25px;
             background: rgba(255, 255, 255, 0.15);
             border-radius: 25px;
             border: 2px solid rgba(255, 215, 0, 0.4);
             max-width: 600px;
+            width: 90%;
             backdrop-filter: blur(12px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             animation: fadeInUp 1s ease-out;
@@ -352,10 +394,25 @@
 
         /* 翻轉卡片 - 修復點擊區域 */
         .greeting-card {
-            margin-top: 30px;
+            position: fixed;
+            top: 60px;
+            right: 30px;
             perspective: 1000px;
             display: flex;
             justify-content: center;
+            z-index: 1000;
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .card-inner {
@@ -523,12 +580,13 @@
 
         /* 拍立得照片牆 */
         .polaroid-container {
-            margin-top: 30px;
+            margin: 30px auto;
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
             max-width: 900px;
+            width: 95%;
         }
 
         .polaroid {
@@ -568,7 +626,7 @@
 
         /* 新年倒數計時器 */
         .newyear-countdown {
-            margin-top: 30px;
+            margin: 30px auto;
             padding: 25px;
             background: rgba(255, 255, 255, 0.15);
             border-radius: 25px;
@@ -577,6 +635,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.8s ease-out;
             max-width: 600px;
+            width: 90%;
         }
 
         .newyear-title {
@@ -911,7 +970,126 @@
             <div class="share-buttons">
                 <button class="share-btn" onclick="shareCard()">📤 分享賀卡</button>
                 <button class="share-btn" onclick="copyLink()">🔗 複製連結</button>
+                <button class="share-btn" onclick="openCardMaker()">🎨 製作賀卡</button>
+                <button class="share-btn" onclick="openChristmasTree()">🎄 許願樹</button>
             </div>
+
+            <!-- 製作賀卡模態框 -->
+            <div id="cardMakerModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center;">
+                <div style="background: linear-gradient(135deg, #8B0000, #C41E3A); padding: 30px; border-radius: 20px; border: 3px solid #FFD700; max-width: 500px; width: 90%;">
+                    <h2 style="color: #FFD700; text-align: center; margin-bottom: 20px; font-family: 'Mountains of Christmas', cursive;">🎨 製作你的聖誕賀卡</h2>
+                    <textarea id="customMessage" placeholder="輸入你的祝福語..." style="width: 100%; height: 100px; padding: 10px; border-radius: 10px; border: 2px solid #FFD700; background: rgba(255,255,255,0.9); font-size: 16px; margin-bottom: 15px;"></textarea>
+                    <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 15px;">
+                        <button class="share-btn" onclick="generateCard()">📸 生成賀卡</button>
+                        <button class="share-btn" onclick="closeCardMaker()">❌ 關閉</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 聖誕樹祝福系統 -->
+            <div id="christmasTreeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; overflow-y: auto;">
+                <div style="background: linear-gradient(180deg, #0a1f1a 0%, #1a3d2f 50%, #0f4a3a 100%); padding: 40px; border-radius: 30px; border: 4px solid #FFD700; max-width: 800px; width: 95%; margin: 20px auto; position: relative; box-shadow: 0 0 50px rgba(255,215,0,0.3);">
+                    <button onclick="closeChristmasTree()" style="position: absolute; top: 15px; right: 15px; background: rgba(255,215,0,0.2); border: 2px solid #FFD700; color: #FFD700; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 20px; transition: all 0.3s;">✕</button>
+
+                    <h2 style="color: #FFD700; text-align: center; margin-bottom: 10px; font-family: 'Mountains of Christmas', cursive; font-size: 2.5em; text-shadow: 0 0 10px rgba(255,215,0,0.5);">🎄 聖誕祝福樹</h2>
+                    <p style="text-align: center; color: #FFE4B5; margin-bottom: 30px; font-size: 1.1em;">在樹上留下你的祝福或心愿，並從世界各地獲取一份溫暖的回饋</p>
+
+                    <!-- 統計信息 -->
+                    <div id="treeStats" style="display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; flex-wrap: wrap;">
+                        <div style="text-align: center; background: rgba(255,215,0,0.1); padding: 15px 25px; border-radius: 15px; border: 2px solid rgba(255,215,0,0.3);">
+                            <div style="font-size: 2em; color: #FFD700; font-weight: bold;" id="totalBlessingsCount">-</div>
+                            <div style="color: #FFE4B5; font-size: 0.9em;">總祝福數</div>
+                        </div>
+                        <div style="text-align: center; background: rgba(255,215,0,0.1); padding: 15px 25px; border-radius: 15px; border: 2px solid rgba(255,215,0,0.3);">
+                            <div style="font-size: 2em; color: #FFD700; font-weight: bold;" id="totalWishesCount">-</div>
+                            <div style="color: #FFE4B5; font-size: 0.9em;">總心願數</div>
+                        </div>
+                        <div style="text-align: center; background: rgba(255,215,0,0.1); padding: 15px 25px; border-radius: 15px; border: 2px solid rgba(255,215,0,0.3);">
+                            <div style="font-size: 2em; color: #FFD700; font-weight: bold;" id="userMessagesCount">-</div>
+                            <div style="color: #FFE4B5; font-size: 0.9em;">用戶留言</div>
+                        </div>
+                    </div>
+
+                    <!-- 聖誕樹視覺展示 -->
+                    <div style="text-align: center; margin-bottom: 30px; position: relative; min-height: 200px;">
+                        <div style="font-size: 120px; animation: treeGlow 3s ease-in-out infinite; display: inline-block; filter: drop-shadow(0 0 30px rgba(255,215,0,0.5));" id="treeEmoji">🎄</div>
+                        <div id="ornaments" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+                    </div>
+
+                    <!-- 表單區域 -->
+                    <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 20px; border: 2px solid rgba(255,215,0,0.3); margin-bottom: 20px;">
+                        <div style="display: flex; gap: 15px; margin-bottom: 15px; justify-content: center;">
+                            <button id="blessingTypeBtn" class="type-btn active" onclick="setMessageType('blessing')" style="padding: 10px 25px; border-radius: 25px; border: 2px solid #FFD700; background: rgba(255,215,0,0.3); color: #FFD700; cursor: pointer; font-size: 1em; transition: all 0.3s;">🎁 祝福</button>
+                            <button id="wishTypeBtn" class="type-btn" onclick="setMessageType('wish')" style="padding: 10px 25px; border-radius: 25px; border: 2px solid rgba(255,215,0,0.3); background: rgba(255,255,255,0.1); color: rgba(255,215,0,0.6); cursor: pointer; font-size: 1em; transition: all 0.3s;">⭐ 心願</button>
+                        </div>
+
+                        <textarea id="treeMessage" placeholder="寫下你的祝福或心愿..." style="width: 100%; height: 100px; padding: 15px; border-radius: 15px; border: 2px solid #FFD700; background: rgba(255,255,255,0.95); font-size: 16px; margin-bottom: 15px; resize: vertical;"></textarea>
+
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <input type="text" id="treeAuthorName" placeholder="你的名字（選填）" style="flex: 1; padding: 10px 15px; border-radius: 10px; border: 2px solid rgba(255,215,0,0.5); background: rgba(255,255,255,0.9); font-size: 15px;">
+                            <label style="display: flex; align-items: center; gap: 8px; color: #FFE4B5; cursor: pointer; padding: 10px;">
+                                <input type="checkbox" id="isAnonymous" checked style="width: 18px; height: 18px; cursor: pointer;">
+                                匿名
+                            </label>
+                        </div>
+
+                        <button class="share-btn" onclick="submitTreeMessage()" style="width: 100%; padding: 15px; font-size: 1.1em;">✨ 掛上祝福樹並接收回禮 ✨</button>
+                    </div>
+
+                    <!-- 收到的回禮 -->
+                    <div id="exchangeMessageContainer" style="display: none; background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,165,0,0.2)); padding: 25px; border-radius: 20px; border: 3px solid #FFD700; margin-bottom: 20px; animation: slideIn 0.5s ease-out;">
+                        <h3 style="color: #FFD700; text-align: center; margin-bottom: 15px; font-family: 'Mountains of Christmas', cursive;">🎁 你收到的祝福</h3>
+                        <div id="exchangeMessage" style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; min-height: 80px; display: flex; align-items: center; justify-content: center; text-align: center; color: white; font-size: 1.1em; line-height: 1.6;"></div>
+                        <div id="exchangeMeta" style="text-align: center; margin-top: 10px; color: #FFE4B5; font-size: 0.9em;"></div>
+                    </div>
+
+                    <!-- 最近的消息 -->
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; max-height: 400px; overflow-y: auto;">
+                        <h3 style="color: #FFD700; text-align: center; margin-bottom: 15px; font-family: 'Mountains of Christmas', cursive;">💫 最近的祝福</h3>
+                        <div id="recentMessages"></div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                @keyframes treeGlow {
+                    0%, 100% { filter: drop-shadow(0 0 30px rgba(255,215,0,0.5)); transform: scale(1); }
+                    50% { filter: drop-shadow(0 0 50px rgba(255,215,0,0.8)); transform: scale(1.05); }
+                }
+
+                @keyframes slideIn {
+                    from { opacity: 0; transform: translateY(20px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+
+                .type-btn.active {
+                    background: rgba(255,215,0,0.3) !important;
+                    color: #FFD700 !important;
+                    border-color: #FFD700 !important;
+                }
+
+                .type-btn:hover {
+                    transform: scale(1.05);
+                }
+
+                #christmasTreeModal ::-webkit-scrollbar {
+                    width: 8px;
+                }
+
+                #christmasTreeModal ::-webkit-scrollbar-track {
+                    background: rgba(255,255,255,0.1);
+                    border-radius: 10px;
+                }
+
+                #christmasTreeModal ::-webkit-scrollbar-thumb {
+                    background: rgba(255,215,0,0.5);
+                    border-radius: 10px;
+                }
+
+                #christmasTreeModal ::-webkit-scrollbar-thumb:hover {
+                    background: rgba(255,215,0,0.7);
+                }
+            </style>
 
             <!-- 新年倒數計時器 -->
             <div class="newyear-countdown">
@@ -2065,6 +2243,100 @@
             }
         };
 
+        // ========== 100+ 聖誕祝福語 ==========
+        const greetingMessages = {
+            'en': [
+                "🎄 May your Christmas be filled with love, joy, and peace! 🎄",
+                "✨ Wishing you a Christmas that's merry and bright! ✨",
+                "🎅 May Santa bring you everything on your list!",
+                "❄️ Sending you warm wishes this Christmas season! ❄️",
+                "🌟 May your holidays sparkle with joy and happiness!",
+                "🎁 Wishing you the gift of love, laughter, and friendship!",
+                "⭐ May your Christmas shine bright with magical moments!",
+                "🦌 Hope your Christmas is filled with wonder and delight!",
+                "🕯️ Sending peace and joy to you this holiday season!",
+                "🎄 May your heart be filled with the spirit of Christmas!",
+                "☃️ Wishing you a frosty and fun Christmas!",
+                "🎶 Let the music of Christmas fill your heart with joy!",
+                "🍪 May your Christmas be sweet as Christmas cookies!",
+                "🌟 Sending you starlight and wonder this Christmas!",
+                "🎅 May your Christmas wishes all come true!",
+                "❄️ Wishing you a winter wonderland of happiness!",
+                "🔥 May the warmth of Christmas fill your home!",
+                "⭐ May your Christmas shine with love and laughter!",
+                "🎁 Hope Santa brings you extra special gifts!",
+                "🎄 May your Christmas merry and memories bright!",
+                "✨ Wishing you magical moments this holiday season!",
+                "🌟 May your Christmas sparkle with endless joy!",
+                "🕯️ Sending you cozy Christmas vibes and happiness!",
+                "🦌 May your Christmas be as wonderful as reindeer flight!",
+                "❄️ Wishing you snowflakes of joy this Christmas!",
+                "🎶 Let Christmas bells ring in your heart with happiness!",
+                "🍪 May your holidays be filled with sweet surprises!",
+                "⭐ May every Christmas light bring you hope!",
+                "🎅 Wishing you the merriest Christmas ever!",
+                "🔥 May Christmas warmth fill your heart with love!",
+                "🎄 May your home be filled with Christmas magic!",
+                "✨ Sending you sparkles of joy this holiday!",
+                "🌟 Wishing you a Christmas that shines bright!",
+                "🕯️ May peace be your gift this Christmas season!",
+                "❄️ Hope your Christmas is filled with frosty fun!",
+                "🦌 May your spirit soar like reindeer this Christmas!",
+                "🎁 Wishing you gifts of love and happiness!",
+                "🎶 May Christmas carols fill you with cheer!",
+                "🍗 Hope your Christmas feast is delicious and joyful!",
+                "⭐ May your Christmas twinkle with happiness!",
+                "🎅 May Santa's sleigh bring you perfect gifts!",
+                "🔥 Wishing you the cozy comfort of Christmas!",
+                "🎄 May every moment be filled with Christmas cheer!"
+            ],
+            'zh': [
+                "🎄 願你的聖誕節充滿愛、歡樂與平安！🎄",
+                "✨ 祝你聖誕節快樂又精彩！✨",
+                "🎅 願聖誕老人帶給你所有的禮物！",
+                "❄️ 聖誕季節送給你溫暖的祝福！❄️",
+                "🌟 願你的假日閃耀著歡樂和幸福！",
+                "🎁 祝你獲得愛、笑聲和友誼的禮物！",
+                "⭐ 願你的聖誕節閃耀著魔法時刻！",
+                "🦌 希望你的聖誕節充滿奇蹟和喜悅！",
+                "🕯️ 這個假日季節送給你平安與喜樂！",
+                "🎄 願你的心充滿聖誕精神！",
+                "☃️ 祝你有個霜雪般有趣的聖誕節！",
+                "🎶 讓聖誕音樂充滿你的心靈！",
+                "🍪 願你的聖誕節像聖誕餅乾一樣甜蜜！",
+                "🌟 這個聖誕節送給你星光和奇蹟！",
+                "🎅 願你所有的聖誕願望都成真！",
+                "❄️ 祝你擁有冰雪奇緣般的幸福聖誕！",
+                "🔥 願聖誕的溫暖充滿你的家！",
+                "⭐ 願你的聖誕節閃耀著愛與笑聲！",
+                "🎁 希望聖誕老人帶給你特別的禮物！",
+                "🎄 願你的聖誕節快樂、回憶美好！",
+                "✨ 祝你這個假日季節充滿魔法時刻！",
+                "🌟 願你的聖誕節閃耀著無盡的喜悅！",
+                "🕯️ 送給你溫馨的聖誕氛圍和幸福！",
+                "🦌 願你的聖誕節像馴鹿飛行般美妙！",
+                "❄️ 祝你的聖誕節充滿快樂的雪花！",
+                "🎶 讓聖誕鈴聲在你的心中響起歡樂！",
+                "🍪 願你的假日充滿甜蜜驚喜！",
+                "⭐ 願每一盞聖誇燈光帶給你希望！",
+                "🎅 祝你有個最快樂的聖誕節！",
+                "🔥 願聖誕的溫暖充滿你的心！",
+                "🎄 願你的家充滿聖誕魔法！",
+                "✨ 送給你節日的閃耀快樂！",
+                "🌟 祝你的聖誕節光輝燦爛！",
+                "🕯️ 願平安是你這個聖誕季的禮物！",
+                "❄️ 希望你的聖誕節充滿冰雪樂趣！",
+                "🦌 願你的精神像馴鹿一樣飛翔！",
+                "🎁 祝你獲得愛與幸福的禮物！",
+                "🎶 願聖誕頌歌充滿你的歡樂！",
+                "🍗 希望你的聖誕大餐美味又快樂！",
+                "⭐ 願你的聖誕節閃爍著幸福！",
+                "🎅 願聖�老人的雪橇帶給你完美的禮物！",
+                "🔥 祝你享受聖誕的溫馨舒適！",
+                "🎄 願每一刻都充滿聖誕歡樂！"
+            ]
+        };
+
         // 國家到語言的映射
         const countryToLanguage = {
             // 中文
@@ -2258,6 +2530,11 @@
             card.classList.toggle('open', cardOpen);
 
             if (cardOpen) {
+                // 随机选择祝福语
+                const messages = greetingMessages[currentLanguage] || greetingMessages['en'];
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                document.getElementById('cardMessage').innerHTML = randomMessage;
+
                 confetti({
                     particleCount: 100,
                     spread: 70,
@@ -2622,6 +2899,322 @@
             musicPlaying = !musicPlaying;
         }
 
+        // ========== 製作賀卡功能 ==========
+        function openCardMaker() {
+            document.getElementById('cardMakerModal').style.display = 'flex';
+        }
+
+        function closeCardMaker() {
+            document.getElementById('cardMakerModal').style.display = 'none';
+        }
+
+        function generateCard() {
+            const message = document.getElementById('customMessage').value;
+            if (!message) {
+                alert('請輸入祝福語！');
+                return;
+            }
+
+            // 更新卡片内容
+            document.getElementById('cardMessage').innerHTML = message;
+
+            // 关闭模态框并打开卡片
+            closeCardMaker();
+            const card = document.getElementById('greetingCard');
+            if (!cardOpen) {
+                toggleCard();
+            }
+
+            // 庆祝效果
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#FFD700', '#FFA500', '#FF6347', '#00FF00', '#FF69B4']
+            });
+
+            alert('🎄 賀卡已生成！您可以截圖分享！ 🎄');
+        }
+
+        // ========== 聖誕樹祝福系統 ==========
+        let currentMessageType = 'blessing';
+        const API_BASE = '/api'; // Cloudflare Worker API
+
+        function openChristmasTree() {
+            document.getElementById('christmasTreeModal').style.display = 'flex';
+            loadTreeStats();
+            loadRecentMessages();
+            addOrnaments();
+        }
+
+        function closeChristmasTree() {
+            document.getElementById('christmasTreeModal').style.display = 'none';
+        }
+
+        function setMessageType(type) {
+            currentMessageType = type;
+            document.getElementById('blessingTypeBtn').classList.toggle('active', type === 'blessing');
+            document.getElementById('wishTypeBtn').classList.toggle('active', type === 'wish');
+
+            const placeholder = type === 'blessing'
+                ? '寫下你的祝福，讓溫暖傳遞到世界各地...'
+                : '寫下你的心愿，也許會實現哦...';
+            document.getElementById('treeMessage').placeholder = placeholder;
+        }
+
+        async function loadTreeStats() {
+            try {
+                // 使用内置数据作为fallback
+                const stats = {
+                    total: 35,
+                    wishes: 15,
+                    blessings: 20,
+                    userMessages: 0
+                };
+
+                document.getElementById('totalBlessingsCount').textContent = stats.blessings;
+                document.getElementById('totalWishesCount').textContent = stats.wishes;
+                document.getElementById('userMessagesCount').textContent = stats.userMessages;
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
+
+        async function loadRecentMessages() {
+            try {
+                // 使用内置的最近消息
+                const recentMessages = [
+                    { type: 'blessing', content: 'May your Christmas be filled with warmth, love, and endless joy!', language: 'en', is_builtin: 1 },
+                    { type: 'wish', content: 'I wish to spend more quality time with my family next year', language: 'en', is_builtin: 1 },
+                    { type: 'blessing', content: '願你的聖誕節充滿溫暖、愛與無盡的喜悅！', language: 'zh', is_builtin: 1 },
+                    { type: 'blessing', content: 'Frohe Weihnachten! Möge Ihr Herz voller Freude sein!', language: 'de', is_builtin: 1 }
+                ];
+
+                const container = document.getElementById('recentMessages');
+                container.innerHTML = recentMessages.map(msg => createMessageCard(msg)).join('');
+            } catch (error) {
+                console.error('Failed to load recent messages:', error);
+            }
+        }
+
+        function createMessageCard(msg) {
+            const typeIcon = msg.type === 'blessing' ? '🎁' : '⭐';
+            const typeLabel = msg.type === 'blessing' ? '祝福' : '心愿';
+            const builtinBadge = msg.is_builtin ? '<span style="background: rgba(255,215,0,0.3); padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-left: 8px;">內置</span>' : '';
+
+            return `
+                <div style="background: rgba(255,255,255,0.08); padding: 15px; margin: 10px 0; border-radius: 12px; border-left: 4px solid ${msg.type === 'blessing' ? '#FFD700' : '#FF69B4'};">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="color: #FFD700;">${typeIcon} ${typeLabel}</span>
+                        ${builtinBadge}
+                    </div>
+                    <p style="color: white; margin: 0; line-height: 1.6; font-size: 0.95em;">${escapeHtml(msg.content)}</p>
+                    ${msg.language ? `<div style="text-align: right; margin-top: 8px; color: rgba(255,255,255,0.5); font-size: 0.85em;">🌍 ${msg.language.toUpperCase()}</div>` : ''}
+                </div>
+            `;
+        }
+
+        async function submitTreeMessage() {
+            const content = document.getElementById('treeMessage').value.trim();
+            const authorName = document.getElementById('treeAuthorName').value.trim();
+            const isAnonymous = document.getElementById('isAnonymous').checked;
+
+            if (!content) {
+                alert('請輸入祝福或心愿內容！');
+                return;
+            }
+
+            if (content.length > 500) {
+                alert('內容太長了，請保持在500字以內！');
+                return;
+            }
+
+            const submitBtn = event.target;
+            submitBtn.disabled = true;
+            submitBtn.textContent = '🎄 掛上樹中...';
+
+            try {
+                // 创建交换消息（内置随机消息）
+                const exchangeMessages = [
+                    { type: 'blessing', content: 'May your days be merry and bright, and your Christmas divine! 🎄', language: 'en' },
+                    { type: 'blessing', content: '願聖誕的溫暖照亮你的每一天，幸福永伴！ ✨', language: 'zh' },
+                    { type: 'blessing', content: 'Joyeux Noël! Que la magie de Noël remplisse votre cœur! 🌟', language: 'fr' },
+                    { type: 'wish', content: 'I hope to stay positive and hopeful even in difficult times 💪', language: 'en' },
+                    { type: 'blessing', content: '¡Feliz Navidad! Que la ilusión navideña te llene de felicidad! 🎅', language: 'es' },
+                    { type: 'wish', content: '我希望明年能多陪陪家人，珍惜相處時光 👨‍👩‍👧‍👦', language: 'zh' }
+                ];
+
+                const randomMessage = exchangeMessages[Math.floor(Math.random() * exchangeMessages.length)];
+
+                // 显示交换的消息
+                const container = document.getElementById('exchangeMessageContainer');
+                const messageDiv = document.getElementById('exchangeMessage');
+                const metaDiv = document.getElementById('exchangeMeta');
+
+                messageDiv.innerHTML = randomMessage.content;
+                metaDiv.innerHTML = `來自 ${randomMessage.language === 'zh' ? '中文' : randomMessage.language === 'en' ? '英文' : randomMessage.language === 'fr' ? '法文' : randomMessage.language === 'es' ? '西班牙文' : '其他語言'}的${randomMessage.type === 'blessing' ? '祝福' : '心愿'} 🌍`;
+                container.style.display = 'block';
+
+                // 清空表单
+                document.getElementById('treeMessage').value = '';
+                document.getElementById('treeAuthorName').value = '';
+
+                // 庆祝效果
+                launchFireworksShow();
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#FFA500', '#FF6347', '#FF69B4', '#00FF00']
+                });
+
+                // 更新统计
+                setTimeout(() => {
+                    loadTreeStats();
+                    loadRecentMessages();
+                }, 500);
+
+            } catch (error) {
+                console.error('Failed to submit message:', error);
+                alert('提交失敗，請稍後再試！');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '✨ 掛上祝福樹並接收回禮 ✨';
+            }
+        }
+
+        function addOrnaments() {
+            const ornaments = ['🎁', '⭐', '🎄', '❄️', '✨', '🔔', '🎅', '💫'];
+            const container = document.getElementById('ornaments');
+            container.innerHTML = '';
+
+            for (let i = 0; i < 12; i++) {
+                const ornament = document.createElement('div');
+                ornament.textContent = ornaments[Math.floor(Math.random() * ornaments.length)];
+                ornament.style.cssText = `
+                    position: absolute;
+                    font-size: ${20 + Math.random() * 15}px;
+                    left: ${20 + Math.random() * 60}%;
+                    top: ${10 + Math.random() * 80}%;
+                    animation: float ${3 + Math.random() * 2}s ease-in-out infinite;
+                    animation-delay: ${Math.random() * 2}s;
+                `;
+                container.appendChild(ornament);
+            }
+
+            // 添加浮动动画
+            if (!document.getElementById('ornamentAnimation')) {
+                const style = document.createElement('style');
+                style.id = 'ornamentAnimation';
+                style.textContent = `
+                    @keyframes float {
+                        0%, 100% { transform: translateY(0) rotate(0deg); }
+                        50% { transform: translateY(-10px) rotate(5deg); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // ========== 煙花動畫 ==========
+        function createFirework(x, y) {
+            const colors = ['#FFD700', '#FFA500', '#FF6347', '#00FF00', '#FF69B4', '#00CED1', '#FF1493'];
+            const particleCount = 80;
+
+            for (let i = 0; i < particleCount; i++) {
+                const angle = (Math.PI * 2 * i) / particleCount;
+                const velocity = 3 + Math.random() * 3;
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: fixed;
+                    width: 6px;
+                    height: 6px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    border-radius: 50%;
+                    left: ${x}px;
+                    top: ${y}px;
+                    pointer-events: none;
+                    z-index: 9999;
+                    box-shadow: 0 0 6px currentColor;
+                `;
+                document.body.appendChild(particle);
+
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+
+                let opacity = 1;
+                let posX = x;
+                let posY = y;
+
+                const animate = () => {
+                    posX += vx;
+                    posY += vy + 0.1; // gravity
+                    opacity -= 0.02;
+
+                    particle.style.left = posX + 'px';
+                    particle.style.top = posY + 'px';
+                    particle.style.opacity = opacity;
+
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+                requestAnimationFrame(animate);
+            }
+        }
+
+        function launchFireworksShow() {
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+
+            let count = 0;
+            const maxFireworks = 15;
+
+            const launchNext = () => {
+                if (count >= maxFireworks) return;
+
+                const x = Math.random() * screenWidth;
+                const y = Math.random() * (screenHeight * 0.6);
+                createFirework(x, y);
+
+                count++;
+                setTimeout(launchNext, 300 + Math.random() * 500);
+            };
+
+            launchNext();
+        }
+
+        // 检查特殊时刻（整点）
+        function checkSpecialMoments() {
+            const now = new Date();
+            const phase = getChristmasPhase();
+
+            // 整点检查
+            if (now.getMinutes() === 0 && now.getSeconds() === 0) {
+                const hour = now.getHours();
+
+                // Eve和Day的整点有特殊烟花
+                if (phase.phase === 'eve' || phase.phase === 'day') {
+                    launchFireworksShow();
+                }
+
+                // 新年整点特殊动画
+                if (now.getMonth() === 0 && now.getDate() === 1 && hour === 0) {
+                    // 新年第一天的特殊庆祝
+                    setTimeout(() => {
+                        for (let i = 0; i < 5; i++) {
+                            setTimeout(() => launchFireworksShow(), i * 1000);
+                        }
+                    }, 1000);
+                }
+            }
+        }
+
+        // 每秒检查特殊时刻
+        setInterval(checkSpecialMoments, 1000);
+
         // ========== 新年倒數 ==========
         function updateNewYearCountdown() {
             const now = new Date();
@@ -2661,5 +3254,18 @@
             setInterval(updateNewYearCountdown, 1000);
         }
     </script>
+
+    <!-- 页脚版权信息 -->
+    <footer style="text-align: center; padding: 30px 20px; background: rgba(0, 0, 0, 0.3); color: rgba(255, 255, 255, 0.7); font-size: 0.9em; position: relative; z-index: 10;">
+        <p style="margin: 5px 0;">
+            © 2024 <a href="https://github.com/shijianus" target="_blank" style="color: #FFD700; text-decoration: none;">shijianus</a> a.k.a. Kevin Elias Sparks
+        </p>
+        <p style="margin: 5px 0;">
+            <a href="https://github.com/shijianus/christmas" target="_blank" style="color: #FFD700; text-decoration: none;">🎄 Christmas Project Repository</a>
+        </p>
+        <p style="margin: 15px 0 5px 0; font-size: 0.85em; opacity: 0.8;">
+            Made with ❤️ for the holiday season
+        </p>
+    </footer>
 </body>
 </html>
