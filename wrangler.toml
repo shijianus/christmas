@@ -6,11 +6,4 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "christmas-blessings"
-database_id = "christmas-blessings-db"
-
-# Worker configuration
-[env.production]
-name = "christmas-api"
-routes = [
-  { pattern = "https://christmas-dvs.pages.dev/api/*", zone_name = "pages.dev" }
-]
+database_id = "1450c0ef-57fa-4cc6-b3ad-d44b8f2bf367"
