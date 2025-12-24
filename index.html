@@ -13,10 +13,19 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
             background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 50%, #1a472a 100%);
             min-height: 100vh;
             position: relative;
+            transition: background 1s ease;
+        }
+
+        body.christmas-eve {
+            background: linear-gradient(135deg, #0f2a1a 0%, #1a3d2f 50%, #0f2a1a 100%);
+        }
+
+        body.christmas-day {
+            background: linear-gradient(135deg, #2a1a0f 0%, #3d2f1a 50%, #2a1a0f 100%);
         }
 
         .snowflake {
@@ -60,6 +69,12 @@
                          0 0 40px rgba(255, 215, 0, 0.6),
                          0 0 60px rgba(255, 215, 0, 0.4);
             margin-bottom: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .tree:hover {
+            transform: scale(1.1) rotate(5deg);
         }
 
         @keyframes treeGlow {
@@ -118,12 +133,191 @@
             border: 2px solid rgba(255, 215, 0, 0.3);
         }
 
-        .time {
-            font-size: 2em;
-            color: #FFD700;
-            margin-top: 20px;
+        .countdown-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            border: 3px solid rgba(255, 215, 0, 0.4);
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .phase-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #1a472a;
+            border-radius: 25px;
             font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .countdown {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .countdown-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9em;
+            color: #FFE4B5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .activities-card {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .activities-title {
+            font-size: 1.5em;
+            color: #FFD700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-item {
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .activity-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateX(5px);
+        }
+
+        .activity-icon {
+            font-size: 1.5em;
+        }
+
+        .greeting-card {
+            margin-top: 30px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .card-inner.open {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #8B0000, #C41E3A);
+            border: 3px solid #FFD700;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #1a472a, #2d5a3f);
+            border: 3px solid #FFD700;
+            transform: rotateY(180deg);
+        }
+
+        .card-hint {
+            color: #FFD700;
+            font-size: 0.9em;
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .card-message {
+            color: white;
+            font-size: 1.2em;
+            line-height: 1.6;
         }
 
         .music-control {
@@ -148,6 +342,11 @@
         .music-control:hover {
             transform: scale(1.1);
             background: rgba(255, 255, 255, 0.3);
+        }
+
+        .music-control.playing {
+            animation: none;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
         }
 
         @keyframes pulse {
@@ -187,6 +386,29 @@
             }
         }
 
+        .share-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .share-btn {
+            padding: 10px 20px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #FFD700;
+            border-radius: 25px;
+            color: #FFD700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .share-btn:hover {
+            background: rgba(255, 215, 0, 0.4);
+            transform: translateY(-3px);
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5em;
@@ -201,6 +423,20 @@
                 font-size: 1em;
                 padding: 10px 20px;
             }
+            .countdown-number {
+                font-size: 2em;
+            }
+            .countdown-item {
+                min-width: 60px;
+            }
+            .phase-badge {
+                font-size: 1em;
+                padding: 8px 15px;
+            }
+            .card-inner {
+                width: 250px;
+                height: 180px;
+            }
         }
     </style>
 </head>
@@ -208,14 +444,62 @@
     <div class="decorations" id="decorations"></div>
 
     <div class="container">
-        <div class="tree">🎄</div>
+        <div class="tree" id="tree" onclick="shakeTree()">🎄</div>
         <div class="message">
             <h1 id="greeting">Merry Christmas!</h1>
             <p class="subtitle" id="subtitle">Wishing you joy and happiness</p>
+
             <div class="location-info" id="locationInfo">
                 Detecting your location...
             </div>
-            <div class="time" id="time"></div>
+
+            <div class="countdown-container">
+                <div class="phase-badge" id="phaseBadge">🎄 Preparing for Christmas</div>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label" id="daysLabel">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label" id="hoursLabel">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label" id="minutesLabel">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label" id="secondsLabel">Seconds</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activities-card" id="activitiesCard" style="display: none;">
+                <div class="activities-title" id="activitiesTitle">✨ Recommended Activities</div>
+                <div id="activitiesList"></div>
+            </div>
+
+            <div class="greeting-card" onclick="toggleCard()">
+                <div class="card-inner" id="greetingCard">
+                    <div class="card-front">
+                        <div style="font-size: 3em;">🎁</div>
+                        <div style="color: white; font-size: 1.2em; margin-top: 10px;">Click to Open</div>
+                        <div class="card-hint">Your Christmas Card</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="card-message" id="cardMessage">
+                            🎄 May your Christmas be filled with love, joy, and peace! 🎄<br><br>
+                            Wishing you wonderful moments with family and friends!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="share-buttons">
+                <button class="share-btn" onclick="shareCard()">📤 Share Card</button>
+                <button class="share-btn" onclick="copyLink()">🔗 Copy Link</button>
+            </div>
         </div>
     </div>
 
@@ -237,99 +521,208 @@
                 subtitle: 'Wishing you joy and happiness',
                 location: '📍 {city}, {country}',
                 detecting: 'Detecting your location...',
-                christmasDay: 'It\'s Christmas Day! 🎉',
-                countdown: 'Christmas in: {days} days',
-                timezone: 'Timezone: {timezone}'
+                timezone: 'Timezone: {timezone}',
+                phasePreparing: '🎄 Preparing for Christmas',
+                phaseEve: '🌟 Christmas Eve - The Magic Begins!',
+                phaseDay: '🎉 Merry Christmas - It\'s Here!',
+                phaseAfter: '💫 Post-Christmas Peace',
+                days: 'Days',
+                hours: 'Hours',
+                minutes: 'Minutes',
+                seconds: 'Seconds',
+                activitiesTitle: '✨ Recommended for Christmas Eve',
+                activitiesTitleDay: '🎄 Christmas Day Activities',
+                shareSuccess: 'Link copied to clipboard!',
+                cardMessage: '🎄 May your Christmas be filled with love, joy, and peace! 🎄<br><br>Wishing you wonderful moments with family and friends!'
             },
             'zh': {
                 greeting: '圣诞快乐！',
                 subtitle: '祝你幸福快乐',
-                location: '📍 {country} {city}',
+                location: '📍 {country}{city}',
                 detecting: '正在检测您的位置...',
-                christmasDay: '今天是圣诞节！🎉',
-                countdown: '距离圣诞节还有 {days} 天',
-                timezone: '时区: {timezone}'
+                timezone: '时区: {timezone}',
+                phasePreparing: '🎄 等待圣诞节',
+                phaseEve: '🌟 平安夜 - 奇迹开始！',
+                phaseDay: '🎉 圣诞节 - 就在今天！',
+                phaseAfter: '💫 节日余韵',
+                days: '天',
+                hours: '时',
+                minutes: '分',
+                seconds: '秒',
+                activitiesTitle: '✨ 平安夜推荐活动',
+                activitiesTitleDay: '🎄 圣诞节活动',
+                shareSuccess: '链接已复制到剪贴板！',
+                cardMessage: '🎄 愿你的圣诞节充满爱、欢乐和平安！🎄<br><br>祝你与亲朋好友共度美好时光！'
             },
             'es': {
                 greeting: '¡Feliz Navidad!',
                 subtitle: 'Deseándote alegría y felicidad',
                 location: '📍 {city}, {country}',
                 detecting: 'Detectando tu ubicación...',
-                christmasDay: '¡Es Navidad! 🎉',
-                countdown: 'Navidad en: {days} días',
-                timezone: 'Zona horaria: {timezone}'
+                timezone: 'Zona horaria: {timezone}',
+                phasePreparing: '🎄 Preparando Navidad',
+                phaseEve: '🌟 ¡Nochebuena - La Magia Comienza!',
+                phaseDay: '🎉 ¡Es Navidad!',
+                phaseAfter: '💫 Paz Post-Navidad',
+                days: 'Días',
+                hours: 'Horas',
+                minutes: 'Minutos',
+                seconds: 'Segundos',
+                activitiesTitle: '✨ Actividades Recomendadas',
+                activitiesTitleDay: '🎄 Actividades de Navidad',
+                shareSuccess: '¡Enlace copiado!',
+                cardMessage: '🎄 ¡Que tu Navidad esté llena de amor y alegría! 🎄<br><br>¡Felices momentos con familia y amigos!'
             },
             'fr': {
                 greeting: 'Joyeux Noël!',
                 subtitle: 'Te souhaitant joie et bonheur',
                 location: '📍 {city}, {country}',
                 detecting: 'Détection de votre position...',
-                christmasDay: 'C\'est Noël! 🎉',
-                countdown: 'Noël dans: {days} jours',
-                timezone: 'Fuseau horaire: {timezone}'
+                timezone: 'Fuseau horaire: {timezone}',
+                phasePreparing: '🎄 Préparation de Noël',
+                phaseEve: '🌟 La Veille de Noël!',
+                phaseDay: '🎉 C\'est Noël!',
+                phaseAfter: '💫 Paix Post-Noël',
+                days: 'Jours',
+                hours: 'Heures',
+                minutes: 'Minutes',
+                seconds: 'Secondes',
+                activitiesTitle: '✨ Activités Recommandées',
+                activitiesTitleDay: '🎄 Activités de Noël',
+                shareSuccess: 'Lien copié!',
+                cardMessage: '🎄 Que votre Noël soit rempli d\'amour et de joie! 🎄<br><br>Joyeux moments en famille et entre amis!'
             },
             'de': {
                 greeting: 'Frohe Weihnachten!',
                 subtitle: 'Wünsche dir Freude und Glück',
                 location: '📍 {city}, {country}',
                 detecting: 'Standort wird erkannt...',
-                christmasDay: 'Es ist Weihnachten! 🎉',
-                countdown: 'Weihnachten in: {days} Tagen',
-                timezone: 'Zeitzone: {timezone}'
+                timezone: 'Zeitzone: {timezone}',
+                phasePreparing: '🎄 Vorbereitung auf Weihnachten',
+                phaseEve: '🌟 Heiligabend - Die Magie beginnt!',
+                phaseDay: '🎉 Es ist Weihnachten!',
+                phaseAfter: '💫 Nachweihnachtliche Ruhe',
+                days: 'Tage',
+                hours: 'Stunden',
+                minutes: 'Minuten',
+                seconds: 'Sekunden',
+                activitiesTitle: '✨ Empfohlene Aktivitäten',
+                activitiesTitleDay: '🎄 Weihnachtsaktivitäten',
+                shareSuccess: 'Link kopiert!',
+                cardMessage: '🎄 Möge dein Weihnachten voller Liebe und Freude sein! 🎄<br><br>Frohe Momente mit Familie und Freunden!'
             },
             'ja': {
                 greeting: 'メリークリスマス！',
                 subtitle: '喜びと幸せを祈ります',
                 location: '📍 {country}{city}',
                 detecting: '位置を検出中...',
-                christmasDay: '今日はクリスマスです！🎉',
-                countdown: 'クリスマスまであと {days} 日',
-                timezone: 'タイムゾーン: {timezone}'
+                timezone: 'タイムゾーン: {timezone}',
+                phasePreparing: '🎄 クリスマス準備中',
+                phaseEve: '🌟 クリスマスイブ!',
+                phaseDay: '🎉 クリスマス当日！',
+                phaseAfter: '💫 クリスマス後の平和',
+                days: '日',
+                hours: '時間',
+                minutes: '分',
+                seconds: '秒',
+                activitiesTitle: '✨ おすすめアクティビティ',
+                activitiesTitleDay: '🎄 クリスマスのアクティビティ',
+                shareSuccess: 'リンクをコピーしました！',
+                cardMessage: '🎄 クリスマスが愛と喜びに満ちたものになりますように！🎄<br><br>家族や友人と素晴らしい時間をお過ごしください！'
+            }
+        };
+
+        // 文化活动推荐
+        const culturalActivities = {
+            'default': {
+                eve: [
+                    { icon: '🎄', text: 'Decorate the Christmas tree' },
+                    { icon: '🍪', text: 'Bake Christmas cookies' },
+                    { icon: '🎁', text: 'Wrap last-minute gifts' },
+                    { icon: '📖', text: 'Read Christmas stories' },
+                    { icon: '🕯️', text: 'Light Advent candles' },
+                    { icon: '🎶', text: 'Listen to Christmas music' }
+                ],
+                day: [
+                    { icon: '🎁', text: 'Open Christmas presents' },
+                    { icon: '🍖', text: 'Enjoy Christmas dinner' },
+                    { icon: '👨‍👩‍👧‍👦', text: 'Family time together' },
+                    { icon: '⛪', text: 'Attend Christmas service' },
+                    { icon: '📞', text: 'Call loved ones' },
+                    { icon: '🎬', text: 'Watch Christmas movies' }
+                ]
             },
-            'ko': {
-                greeting: '메리 크리스마스!',
-                subtitle: '기쁨과 행복을祝愿합니다',
-                location: '📍 {country} {city}',
-                detecting: '위치 감지 중...',
-                christmasDay: '오늘은 크리스마스! 🎉',
-                countdown: '크리스마스까지 {days} 일',
-                timezone: '시간대: {timezone}'
+            'CN': {
+                eve: [
+                    { icon: '🍎', text: '吃平安果 (Peace apples)' },
+                    { icon: '🎄', text: '装饰圣诞树' },
+                    { icon: '🎁', text: '准备礼物' },
+                    { icon: '🍲', text: '享受圣诞大餐' },
+                    { icon: '🎉', text: '参加圣诞派对' },
+                    { icon: '💑', text: '与爱人共度浪漫时光' }
+                ],
+                day: [
+                    { icon: '🎁', text: '交换圣诞礼物' },
+                    { icon: '🛍️', text: '享受圣诞购物' },
+                    { icon: '👨‍👩‍👧‍👦', text: '家庭聚会' },
+                    { icon: '🎬', text: '观看圣诞电影' },
+                    { icon: '📸', text: '拍照留念' },
+                    { icon: '🎄', text: '继续庆祝节日' }
+                ]
             },
-            'pt': {
-                greeting: 'Feliz Natal!',
-                subtitle: 'Deseando alegria e felicidade',
-                location: '📍 {city}, {country}',
-                detecting: 'Detectando sua localização...',
-                christmasDay: 'É Natal! 🎉',
-                countdown: 'Natal em: {days} dias',
-                timezone: 'Fuso horário: {timezone}'
+            'US': {
+                eve: [
+                    { icon: '🍪', text: 'Leave cookies for Santa' },
+                    { icon: '🥛', text: 'Milk for Santa' },
+                    { icon: '🎁', text: 'Wrap last-minute gifts' },
+                    { icon: '📖', text: '\'Twas the Night Before Christmas' },
+                    { icon: '🎶', text: 'Christmas caroling' },
+                    { icon: '🕯️', text: 'Attend Christmas Eve service' }
+                ],
+                day: [
+                    { icon: '🎁', text: 'Open stockings first' },
+                    { icon: '🍖', text: 'Christmas ham dinner' },
+                    { icon: '⚽', text: 'Watch NFL games' },
+                    { icon: '👨‍👩‍👧‍👦', text: 'Family gathering' },
+                    { icon: '📺', text: 'Watch Christmas movies' },
+                    { icon: '☕', text: 'Eggnog and treats' }
+                ]
             },
-            'ru': {
-                greeting: 'С Рождеством!',
-                subtitle: 'Желаем радости и счастья',
-                location: '📍 {city}, {country}',
-                detecting: 'Определение местоположения...',
-                christmasDay: 'Сегодня Рождество! 🎉',
-                countdown: 'До Рождества: {days} дней',
-                timezone: 'Часовой пояс: {timezone}'
+            'JP': {
+                eve: [
+                    { icon: '🍕', text: 'Order Kentucky Fried Christmas' },
+                    { icon: '🎂', text: 'Christmas cake reservation' },
+                    { icon: '💡', text: 'Illuminate with lights' },
+                    { icon: '👩‍❤️‍💋‍👨', text: 'Date night (romantic evening)' },
+                    { icon: '🎁', text: 'Exchange presents' },
+                    { icon: '🏨', text: 'Hotel stay for couples' }
+                ],
+                day: [
+                    { icon: '🍗', text: 'KFC Christmas dinner' },
+                    { icon: '🎂', text: 'Strawberry Christmas cake' },
+                    { icon: '💑', text: 'Romantic dinner' },
+                    { icon: '🎁', text: 'Gift exchange' },
+                    { icon: '📸', text: 'Couple photos' },
+                    { icon: '✨', text: 'Winter illuminations' }
+                ]
             },
-            'ar': {
-                greeting: 'عيد ميلاد مجيد!',
-                subtitle: 'أتمنى لك الفرح والسعادة',
-                location: '📍 {city}, {country}',
-                detecting: 'جاري تحديد موقعك...',
-                christmasDay: 'اليوم هو عيد الميلاد! 🎉',
-                countdown: 'عيد الميلاد خلال: {days} أيام',
-                timezone: 'المنطقة الزمنية: {timezone}'
-            },
-            'it': {
-                greeting: 'Buon Natale!',
-                subtitle: 'Augurando gioia e felicità',
-                location: '📍 {city}, {country}',
-                detecting: 'Rilevamento posizione...',
-                christmasDay: 'È Natale! 🎉',
-                countdown: 'Natale tra: {days} giorni',
-                timezone: 'Fuso orario: {timezone}'
+            'DE': {
+                eve: [
+                    { icon: '🧦', text: 'Decorate Christmas tree' },
+                    { icon: '🦌', text: 'Read Advent stories' },
+                    { icon: '🎶', text: 'Sing Christmas carols' },
+                    { icon: '🕯️', text: 'Light Advent wreath' },
+                    { icon: '🥨', text: 'Bake Stollen and cookies' },
+                    { icon: '⛪', text: 'Attend midnight mass' }
+                ],
+                day: [
+                    { icon: '🎁', text: 'Open gifts (Die Bescherung)' },
+                    { icon: '🍖', text: 'Christmas goose dinner' },
+                    { icon: '👨‍👩‍👧‍👦', text: 'Family time' },
+                    { icon: '🎄', text: 'Enjoy decorated tree' },
+                    { icon: '🎶', text: 'Silent Night (Stille Nacht)' },
+                    { icon: '☕', text: 'Glühwein (mulled wine)' }
+                ]
             }
         };
 
@@ -339,19 +732,17 @@
             'US': 'en', 'GB': 'en', 'CA': 'en', 'AU': 'en', 'NZ': 'en', 'IE': 'en',
             'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'PE': 'es',
             'FR': 'fr', 'BE': 'fr', 'CH': 'fr', 'LU': 'fr',
-            'DE': 'de', 'AT': 'de', 'CH': 'de',
+            'DE': 'de', 'AT': 'de',
             'JP': 'ja',
-            'KR': 'ko',
-            'BR': 'pt', 'PT': 'pt',
-            'RU': 'ru',
-            'SA': 'ar', 'AE': 'ar', 'EG': 'ar', 'MA': 'ar',
-            'IT': 'it'
+            'KR': 'ja'
         };
 
         let currentLanguage = 'en';
         let userTimezone = 'UTC';
         let locationData = null;
         let musicPlaying = false;
+        let cardOpen = false;
+        let christmasPhase = 'preparing'; // preparing, eve, day, after
 
         // 创建雪花
         function createSnowflakes() {
@@ -374,7 +765,7 @@
 
         // 创建装饰品
         function createDecorations() {
-            const decorations = ['🎁', '⭐', '🔔', '🎅', '🦌', '❄️', '🎄'];
+            const decorations = ['🎁', '⭐', '🔔', '🎅', '🦌', '❄️', '🎄', '🎶'];
             const container = document.getElementById('decorations');
 
             for (let i = 0; i < 15; i++) {
@@ -387,6 +778,76 @@
                 decoration.style.animationDelay = Math.random() * 3 + 's';
                 container.appendChild(decoration);
             }
+        }
+
+        // 摇晃圣诞树
+        function shakeTree() {
+            const tree = document.getElementById('tree');
+            tree.style.animation = 'none';
+            tree.offsetHeight; // Trigger reflow
+            tree.style.animation = 'treeGlow 2s ease-in-out infinite, shakeTree 0.5s ease-in-out';
+
+            // Create falling gifts
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const gift = document.createElement('div');
+                    gift.innerHTML = '🎁';
+                    gift.style.position = 'fixed';
+                    gift.style.left = (50 + (Math.random() - 0.5) * 20) + '%';
+                    gift.style.top = '30%';
+                    gift.style.fontSize = '30px';
+                    gift.style.zIndex = '999';
+                    gift.style.animation = 'fallGift 2s ease-in forwards';
+                    document.body.appendChild(gift);
+                    setTimeout(() => gift.remove(), 2000);
+                }, i * 100);
+            }
+        }
+
+        // Add shake animation
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes shakeTree {
+                0%, 100% { transform: rotate(0deg); }
+                25% { transform: rotate(-10deg); }
+                75% { transform: rotate(10deg); }
+            }
+            @keyframes fallGift {
+                to {
+                    top: 110%;
+                    transform: rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // 翻转贺卡
+        function toggleCard() {
+            const card = document.getElementById('greetingCard');
+            cardOpen = !cardOpen;
+            card.classList.toggle('open', cardOpen);
+        }
+
+        // 分享贺卡
+        function shareCard() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Christmas Greeting',
+                    text: '🎄 Merry Christmas! 🎄',
+                    url: window.location.href
+                });
+            } else {
+                copyLink();
+            }
+        }
+
+        // 复制链接
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const t = translations[currentLanguage];
+                alert(t.shareSuccess);
+            });
         }
 
         // 检测用户位置
@@ -418,6 +879,126 @@
             }
         }
 
+        // 获取当前圣诞节阶段
+        function getChristmasPhase() {
+            const now = new Date();
+            const userDate = new Date(now.toLocaleString('en-US', { timeZone: userTimezone }));
+
+            const month = userDate.getMonth();
+            const day = userDate.getDate();
+            const hour = userDate.getHours();
+
+            // Christmas Eve (Dec 24)
+            if (month === 11 && day === 24) {
+                return 'eve';
+            }
+            // Christmas Day (Dec 25)
+            else if (month === 11 && day === 25) {
+                return 'day';
+            }
+            // Day after Christmas (Dec 26 - Jan 6)
+            else if (month === 11 && day > 25) {
+                return 'after';
+            }
+            // Before Christmas
+            else {
+                return 'preparing';
+            }
+        }
+
+        // 更新倒计时
+        function updateCountdown() {
+            const now = new Date();
+            const userNow = new Date(now.toLocaleString('en-US', { timeZone: userTimezone }));
+
+            // Christmas at midnight user's time
+            const christmas = new Date(userNow.getFullYear(), 11, 25, 0, 0, 0);
+
+            // If Christmas passed, count to next year
+            if (userNow > christmas) {
+                christmas.setFullYear(christmas.getFullYear() + 1);
+            }
+
+            const diffTime = christmas - userNow;
+            const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+            const t = translations[currentLanguage];
+
+            // Update countdown numbers
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            // Update labels
+            document.getElementById('daysLabel').textContent = t.days;
+            document.getElementById('hoursLabel').textContent = t.hours;
+            document.getElementById('minutesLabel').textContent = t.minutes;
+            document.getElementById('secondsLabel').textContent = t.seconds;
+
+            // Update phase
+            christmasPhase = getChristmasPhase();
+            updatePhaseDisplay();
+
+            // Show activities on Eve or Day
+            if (christmasPhase === 'eve' || christmasPhase === 'day') {
+                showActivities(christmasPhase);
+            }
+        }
+
+        // 更新阶段显示
+        function updatePhaseDisplay() {
+            const t = translations[currentLanguage];
+            const badge = document.getElementById('phaseBadge');
+            const body = document.body;
+
+            // Remove all phase classes
+            body.classList.remove('christmas-eve', 'christmas-day');
+
+            switch (christmasPhase) {
+                case 'eve':
+                    badge.textContent = t.phaseEve;
+                    body.classList.add('christmas-eve');
+                    break;
+                case 'day':
+                    badge.textContent = t.phaseDay;
+                    body.classList.add('christmas-day');
+                    break;
+                case 'after':
+                    badge.textContent = t.phaseAfter;
+                    break;
+                default:
+                    badge.textContent = t.phasePreparing;
+            }
+        }
+
+        // 显示活动推荐
+        function showActivities(phase) {
+            const activitiesCard = document.getElementById('activitiesCard');
+            const activitiesList = document.getElementById('activitiesList');
+            const activitiesTitle = document.getElementById('activitiesTitle');
+            const t = translations[currentLanguage];
+
+            const countryCode = locationData?.countryCode || 'default';
+            const activities = culturalActivities[countryCode] || culturalActivities['default'];
+            const currentActivities = phase === 'eve' ? activities.eve : activities.day;
+
+            activitiesTitle.textContent = phase === 'eve' ? t.activitiesTitle : t.activitiesTitleDay;
+            activitiesList.innerHTML = '';
+
+            currentActivities.forEach(activity => {
+                const item = document.createElement('div');
+                item.className = 'activity-item';
+                item.innerHTML = `<span class="activity-icon">${activity.icon}</span><span>${activity.text}</span>`;
+                activitiesList.appendChild(item);
+            });
+
+            activitiesCard.style.display = 'block';
+        }
+
         // 更新UI
         function updateUI() {
             const t = translations[currentLanguage];
@@ -434,43 +1015,41 @@
             document.getElementById('locationInfo').innerHTML =
                 locationText + '<br>' + timezoneText;
 
-            updateTime();
-        }
+            document.getElementById('cardMessage').innerHTML = t.cardMessage;
 
-        // 更新时间
-        function updateTime() {
-            const now = new Date();
-
-            const christmas = new Date(now.getFullYear(), 11, 25);
-            if (now > christmas) {
-                christmas.setFullYear(christmas.getFullYear() + 1);
-            }
-
-            const diffTime = christmas - now;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-            const t = translations[currentLanguage];
-
-            if (diffDays === 0 || (diffDays === 365 && now.getMonth() === 11 && now.getDate() === 25)) {
-                document.getElementById('time').textContent = t.christmasDay;
-            } else {
-                document.getElementById('time').textContent = t.countdown.replace('{days}', diffDays);
-            }
+            updateCountdown();
         }
 
         // 音乐控制
         function toggleMusic() {
             const music = document.getElementById('bgMusic');
             const icon = document.getElementById('musicIcon');
+            const control = document.getElementById('musicControl');
 
             if (musicPlaying) {
                 music.pause();
                 icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+                control.classList.remove('playing');
             } else {
-                music.play();
+                music.play().catch(e => console.log('Audio play failed:', e));
                 icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+                control.classList.add('playing');
             }
             musicPlaying = !musicPlaying;
+        }
+
+        // 尝试自动播放音乐
+        function attemptAutoPlay() {
+            const music = document.getElementById('bgMusic');
+            music.play().then(() => {
+                musicPlaying = true;
+                const icon = document.getElementById('musicIcon');
+                const control = document.getElementById('musicControl');
+                icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+                control.classList.add('playing');
+            }).catch(e => {
+                console.log('Auto-play prevented, waiting for user interaction');
+            });
         }
 
         // 初始化
@@ -482,8 +1061,11 @@
             // 持续创建雪花
             setInterval(createSnowflakes, 5000);
 
-            // 更新倒计时
-            setInterval(updateTime, 60000);
+            // 更新倒计时每秒
+            setInterval(updateCountdown, 1000);
+
+            // 尝试自动播放
+            setTimeout(attemptAutoPlay, 1000);
         };
     </script>
 </body>
