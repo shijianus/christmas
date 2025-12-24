@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎄 Merry Christmas! 圣诞快乐！</title>
+    <title>🎄 聖誕快樂！來自 Shijianus 的祝福</title>
+
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="🎄 聖誕快樂！" />
+    <meta property="og:description" content="點擊拆開我為你準備的聖誕禮物..." />
+    <meta property="og:image" content="https://christmas-dvs.pages.dev/preview.jpg" />
+    <meta property="og:url" content="https://christmas-dvs.pages.dev" />
+    <meta property="og:type" content="website" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
@@ -528,6 +536,85 @@
                 height: 180px;
             }
         }
+
+        /* 添加更細緻的手機版優化 (小於600px) */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem !important; /* 手機上縮小標題 */
+            }
+            .subtitle {
+                font-size: 1.2rem !important; /* 手機上縮小內文 */
+            }
+            .location-info {
+                font-size: 0.9rem !important;
+                padding: 10px 15px;
+            }
+            .countdown-container {
+                padding: 15px;
+                width: 90%;
+            }
+            .countdown-number {
+                font-size: 1.5em;
+            }
+            .countdown-item {
+                min-width: 50px;
+            }
+            .countdown-label {
+                font-size: 0.7em;
+            }
+            .phase-badge {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+            .card-inner {
+                width: 85%;
+                height: 180px;
+                padding: 15px;
+            }
+            .card-front, .card-back {
+                padding: 15px;
+            }
+            .card-message {
+                font-size: 1em;
+            }
+            .gift-box {
+                font-size: 80px;
+            }
+            .gift-hint {
+                font-size: 1.1em;
+                padding: 0 10px;
+                text-align: center;
+            }
+            .lottie-tree {
+                width: 150px;
+                height: 150px;
+            }
+            .activities-card {
+                padding: 15px;
+                width: 90%;
+            }
+            .activities-title {
+                font-size: 1.2em;
+            }
+            .activity-item {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+            .share-btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+            .music-control {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .music-control svg {
+                width: 25px;
+                height: 25px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -864,6 +951,7 @@
             const music = document.getElementById('bgMusic');
 
             // Play music
+            music.volume = 0.5; // Set volume to 50%
             music.play().then(() => {
                 musicPlaying = true;
                 const icon = document.getElementById('musicIcon');
