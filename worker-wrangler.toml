@@ -1,0 +1,15 @@
+name = "christmas-api"
+main = "worker.js"
+compatibility_date = "2024-12-24"
+
+# D1 Database Binding
+[[d1_databases]]
+binding = "DB"
+database_name = "christmas-blessings"
+database_id = "1450c0ef-57fa-4cc6-b3ad-d44b8f2bf367"
+
+# Routes for production
+[env.production]
+routes = [
+  { pattern = "https://christmas-dvs-4c7.pages.dev/api/*", zone_name = "pages.dev" }
+]
