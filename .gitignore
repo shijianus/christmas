@@ -17,6 +17,9 @@ desktop.ini
 # Node modules (if any)
 node_modules/
 
+# Wrangler state
+.wrangler/
+
 # Logs
 *.log
 npm-debug.log*
