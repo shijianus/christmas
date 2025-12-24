@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎄 Merry Christmas! 圣诞快乐！</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <style>
         * {
             margin: 0;
@@ -12,12 +16,20 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Mountains of Christmas', cursive;
             overflow-x: hidden;
-            background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 50%, #1a472a 100%);
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1a472a, #2d5a3f);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             min-height: 100vh;
             position: relative;
             transition: background 1s ease;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         body.christmas-eve {
@@ -71,10 +83,24 @@
             margin-bottom: 30px;
             cursor: pointer;
             transition: transform 0.3s ease;
+            display: none;
         }
 
         .tree:hover {
             transform: scale(1.1) rotate(5deg);
+        }
+
+        .lottie-tree {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            cursor: pointer;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+            transition: transform 0.3s ease;
+        }
+
+        .lottie-tree:hover {
+            transform: scale(1.1);
         }
 
         @keyframes treeGlow {
@@ -127,19 +153,21 @@
             color: #90EE90;
             margin-top: 20px;
             padding: 15px 30px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .countdown-container {
             margin: 30px 0;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 20px;
-            border: 3px solid rgba(255, 215, 0, 0.4);
-            backdrop-filter: blur(10px);
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.8s ease-out;
         }
 
@@ -206,10 +234,12 @@
         .activities-card {
             margin-top: 30px;
             padding: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            border: 2px solid rgba(255, 215, 0, 0.4);
             max-width: 600px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             animation: fadeInUp 1s ease-out;
         }
 
@@ -409,6 +439,56 @@
             transform: translateY(-3px);
         }
 
+        /* Gift opening styles */
+        .gift-opening-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .gift-box {
+            font-size: 150px;
+            cursor: pointer;
+            animation: giftBounce 2s ease-in-out infinite;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes giftBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        .gift-hint {
+            margin-top: 30px;
+            font-size: 1.8em;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .main-content.show {
+            display: block;
+            opacity: 1;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5em;
@@ -437,13 +517,40 @@
                 width: 250px;
                 height: 180px;
             }
+            .gift-box {
+                font-size: 100px;
+            }
+            .gift-hint {
+                font-size: 1.3em;
+            }
+            .lottie-tree {
+                width: 180px;
+                height: 180px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="decorations" id="decorations"></div>
 
-    <div class="container">
+    <!-- Gift Opening Screen -->
+    <div class="gift-opening-container" id="giftOpening">
+        <div class="gift-box" id="giftBox" onclick="openGift()">🎁</div>
+        <div class="gift-hint" id="giftHint">Click to open your Christmas gift!</div>
+    </div>
+
+    <!-- Main Content (Hidden Initially) -->
+    <div class="container main-content" id="mainContent">
+        <lottie-player
+            class="lottie-tree"
+            src="https://assets3.lottiefiles.com/packages/lf20_u4yrau.json"
+            background="transparent"
+            speed="1"
+            loop
+            autoplay
+            onclick="shakeTree()">
+        </lottie-player>
+
         <div class="tree" id="tree" onclick="shakeTree()">🎄</div>
         <div class="message">
             <h1 id="greeting">Merry Christmas!</h1>
@@ -502,6 +609,7 @@
             </div>
         </div>
     </div>
+    </div>
 
     <div class="music-control" id="musicControl" onclick="toggleMusic()">
         <svg id="musicIcon" viewBox="0 0 24 24">
@@ -513,6 +621,7 @@
         <source src="merry_christmas.mp3" type="audio/mpeg">
     </audio>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         // 语言配置
         const translations = {
@@ -743,6 +852,79 @@
         let musicPlaying = false;
         let cardOpen = false;
         let christmasPhase = 'preparing'; // preparing, eve, day, after
+        let giftOpened = false;
+
+        // Open gift function
+        function openGift() {
+            if (giftOpened) return;
+            giftOpened = true;
+
+            const giftOpening = document.getElementById('giftOpening');
+            const mainContent = document.getElementById('mainContent');
+            const music = document.getElementById('bgMusic');
+
+            // Play music
+            music.play().then(() => {
+                musicPlaying = true;
+                const icon = document.getElementById('musicIcon');
+                const control = document.getElementById('musicControl');
+                icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+                control.classList.add('playing');
+            }).catch(e => console.log('Audio play failed:', e));
+
+            // Fade out gift opening screen
+            giftOpening.style.transition = 'opacity 0.5s ease';
+            giftOpening.style.opacity = '0';
+            setTimeout(() => {
+                giftOpening.style.display = 'none';
+            }, 500);
+
+            // Fade in main content
+            setTimeout(() => {
+                mainContent.classList.add('show');
+            }, 300);
+
+            // Initialize location and countdown
+            setTimeout(() => {
+                initializeAfterGiftOpen();
+            }, 500);
+
+            // Trigger confetti celebration
+            triggerConfetti();
+        }
+
+        // Confetti celebration
+        function triggerConfetti() {
+            const duration = 3000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+
+            // Additional celebration burst
+            setTimeout(() => {
+                confetti({
+                    particleCount: 150,
+                    spread: 100,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#FFA500', '#FF6347', '#00FF00', '#FFFFFF']
+                });
+            }, 500);
+        }
 
         // 创建雪花
         function createSnowflakes() {
@@ -827,6 +1009,16 @@
             const card = document.getElementById('greetingCard');
             cardOpen = !cardOpen;
             card.classList.toggle('open', cardOpen);
+
+            // Trigger confetti when card is opened
+            if (cardOpen) {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#FFA500', '#FF6347', '#00FF00']
+                });
+            }
         }
 
         // 分享贺卡
@@ -1056,17 +1248,20 @@
         window.onload = function() {
             createSnowflakes();
             createDecorations();
-            detectLocation();
 
             // 持续创建雪花
             setInterval(createSnowflakes, 5000);
 
+            // Don't auto-detect location or start countdown until gift is opened
+            // These will be triggered by openGift() function
+        };
+
+        // Initialize after gift is opened
+        function initializeAfterGiftOpen() {
+            detectLocation();
             // 更新倒计时每秒
             setInterval(updateCountdown, 1000);
-
-            // 尝试自动播放
-            setTimeout(attemptAutoPlay, 1000);
-        };
+        }
     </script>
 </body>
 </html>
