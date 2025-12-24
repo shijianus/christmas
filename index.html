@@ -537,6 +537,131 @@
             }
         }
 
+        /* 聖誕彩燈容器 */
+        .lights {
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 0;
+            margin: 0;
+            pointer-events: none;
+        }
+
+        /* 每一顆燈 */
+        .lights li {
+            position: relative;
+            list-style: none;
+            margin: 20px;
+            padding: 0;
+            display: inline-block;
+            width: 12px;
+            height: 28px;
+            border-radius: 50%;
+            background: #fff;
+            animation: flash 2s infinite alternate;
+        }
+
+        /* 讓燈有不同顏色與閃爍時間 */
+        .lights li:nth-child(2n+1) { background: #ff0000; animation-duration: 0.4s; }
+        .lights li:nth-child(4n+2) { background: #ffa500; animation-duration: 1.1s; }
+        .lights li:nth-child(3n+2) { background: #00ff00; animation-duration: 1.5s; }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; box-shadow: 0 0 20px currentColor; }
+            50% { opacity: 0.2; box-shadow: 0 0 0 transparent; }
+        }
+
+        /* 飛行的聖誕老人 */
+        .santa-sleigh {
+            position: fixed;
+            top: 10%;
+            left: -200px;
+            width: 150px;
+            opacity: 0.8;
+            animation: fly 20s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes fly {
+            0% { left: -200px; transform: translateY(0); }
+            25% { transform: translateY(20px); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(-20px); }
+            100% { left: 110%; transform: translateY(0); }
+        }
+
+        /* 拍立得照片風格 */
+        .polaroid-container {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            max-width: 800px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 10px 10px 30px 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transform: rotate(-3deg);
+            margin: 20px auto;
+            max-width: 200px;
+            border-radius: 4px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(3deg);
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 10;
+        }
+
+        .polaroid img {
+            width: 100%;
+            display: block;
+            border-radius: 2px;
+        }
+
+        .polaroid .caption {
+            text-align: center;
+            font-family: 'Mountains of Christmas', cursive;
+            color: #333;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        /* 新年倒數計時器 */
+        .newyear-countdown {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.8s ease-out;
+            max-width: 600px;
+        }
+
+        .newyear-title {
+            font-size: 1.5em;
+            color: #FFD700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
         /* 添加更細緻的手機版優化 (小於600px) */
         @media (max-width: 600px) {
             h1 {
@@ -618,6 +743,17 @@
     </style>
 </head>
 <body>
+    <!-- 聖誕彩燈 -->
+    <ul class="lights">
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+    </ul>
+
+    <!-- 飛行的聖誕老人 -->
+    <img src="https://cdn-icons-png.flaticon.com/512/3799/3799988.png" class="santa-sleigh" alt="Santa">
+
     <div class="decorations" id="decorations"></div>
 
     <!-- Gift Opening Screen -->
@@ -693,6 +829,28 @@
             <div class="share-buttons">
                 <button class="share-btn" onclick="shareCard()">📤 Share Card</button>
                 <button class="share-btn" onclick="copyLink()">🔗 Copy Link</button>
+            </div>
+
+            <!-- 新年倒數計時器 -->
+            <div class="newyear-countdown">
+                <div class="newyear-title">🎊 距離 2026 年還有 🎊</div>
+                <div id="newyearCountdown" style="font-size: 1.2rem; color: #ffeb3b; text-align: center;"></div>
+            </div>
+
+            <!-- 拍立得照片牆 -->
+            <div class="polaroid-container">
+                <div class="polaroid">
+                    <img src="https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=400" alt="Christmas Memory">
+                    <div class="caption">🎄 Merry Christmas 2024</div>
+                </div>
+                <div class="polaroid">
+                    <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=400" alt="Holiday Lights">
+                    <div class="caption">✨ Holiday Magic</div>
+                </div>
+                <div class="polaroid">
+                    <img src="https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=400" alt="Winter Joy">
+                    <div class="caption">❄️ Winter Wonderland</div>
+                </div>
             </div>
         </div>
     </div>
@@ -1349,6 +1507,30 @@
             detectLocation();
             // 更新倒计时每秒
             setInterval(updateCountdown, 1000);
+            // 更新年倒數
+            updateNewYearCountdown();
+            setInterval(updateNewYearCountdown, 1000);
+        }
+
+        // 更新年倒數計時器
+        function updateNewYearCountdown() {
+            const now = new Date();
+            const nextYear = now.getFullYear() + 1;
+            const newYearDate = new Date(`January 1, ${nextYear} 00:00:00`).getTime();
+            const currentTime = now.getTime();
+            const gap = newYearDate - currentTime;
+
+            if (gap > 0) {
+                const days = Math.floor(gap / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((gap % (1000 * 60)) / 1000);
+
+                document.getElementById("newyearCountdown").innerHTML =
+                    `${days} 天 ${hours} 時 ${minutes} 分 ${seconds} 秒`;
+            } else {
+                document.getElementById("newyearCountdown").innerHTML = "🎉 新年快樂！ 🎉";
+            }
         }
     </script>
 </body>
