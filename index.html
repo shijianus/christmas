@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 Merry Christmas! 圣诞快乐！</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 50%, #1a472a 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .snowflake {
+            position: fixed;
+            color: white;
+            font-size: 1em;
+            top: -20px;
+            z-index: 9999;
+            animation: fall linear infinite;
+            opacity: 0.8;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10%;
+                transform: translateX(0px) rotate(0deg);
+            }
+            100% {
+                top: 100%;
+                transform: translateX(100px) rotate(360deg);
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tree {
+            font-size: 150px;
+            animation: treeGlow 2s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8),
+                         0 0 40px rgba(255, 215, 0, 0.6),
+                         0 0 60px rgba(255, 215, 0, 0.4);
+            margin-bottom: 30px;
+        }
+
+        @keyframes treeGlow {
+            0%, 100% {
+                filter: brightness(1);
+                transform: scale(1);
+            }
+            50% {
+                filter: brightness(1.2);
+                transform: scale(1.05);
+            }
+        }
+
+        .message {
+            text-align: center;
+            color: white;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF6347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #FFE4B5;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .location-info {
+            font-size: 1.2em;
+            color: #90EE90;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .time {
+            font-size: 2em;
+            color: #FFD700;
+            margin-top: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 15px rgba(255, 215, 0, 0);
+            }
+        }
+
+        .music-control svg {
+            width: 30px;
+            height: 30px;
+            fill: #FFD700;
+        }
+
+        .decorations {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .decoration {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            .subtitle {
+                font-size: 1.3em;
+            }
+            .tree {
+                font-size: 100px;
+            }
+            .location-info {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="decorations" id="decorations"></div>
+
+    <div class="container">
+        <div class="tree">🎄</div>
+        <div class="message">
+            <h1 id="greeting">Merry Christmas!</h1>
+            <p class="subtitle" id="subtitle">Wishing you joy and happiness</p>
+            <div class="location-info" id="locationInfo">
+                Detecting your location...
+            </div>
+            <div class="time" id="time"></div>
+        </div>
+    </div>
+
+    <div class="music-control" id="musicControl" onclick="toggleMusic()">
+        <svg id="musicIcon" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+        </svg>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="merry_christmas.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 语言配置
+        const translations = {
+            'en': {
+                greeting: 'Merry Christmas!',
+                subtitle: 'Wishing you joy and happiness',
+                location: '📍 {city}, {country}',
+                detecting: 'Detecting your location...',
+                christmasDay: 'It\'s Christmas Day! 🎉',
+                countdown: 'Christmas in: {days} days',
+                timezone: 'Timezone: {timezone}'
+            },
+            'zh': {
+                greeting: '圣诞快乐！',
+                subtitle: '祝你幸福快乐',
+                location: '📍 {country} {city}',
+                detecting: '正在检测您的位置...',
+                christmasDay: '今天是圣诞节！🎉',
+                countdown: '距离圣诞节还有 {days} 天',
+                timezone: '时区: {timezone}'
+            },
+            'es': {
+                greeting: '¡Feliz Navidad!',
+                subtitle: 'Deseándote alegría y felicidad',
+                location: '📍 {city}, {country}',
+                detecting: 'Detectando tu ubicación...',
+                christmasDay: '¡Es Navidad! 🎉',
+                countdown: 'Navidad en: {days} días',
+                timezone: 'Zona horaria: {timezone}'
+            },
+            'fr': {
+                greeting: 'Joyeux Noël!',
+                subtitle: 'Te souhaitant joie et bonheur',
+                location: '📍 {city}, {country}',
+                detecting: 'Détection de votre position...',
+                christmasDay: 'C\'est Noël! 🎉',
+                countdown: 'Noël dans: {days} jours',
+                timezone: 'Fuseau horaire: {timezone}'
+            },
+            'de': {
+                greeting: 'Frohe Weihnachten!',
+                subtitle: 'Wünsche dir Freude und Glück',
+                location: '📍 {city}, {country}',
+                detecting: 'Standort wird erkannt...',
+                christmasDay: 'Es ist Weihnachten! 🎉',
+                countdown: 'Weihnachten in: {days} Tagen',
+                timezone: 'Zeitzone: {timezone}'
+            },
+            'ja': {
+                greeting: 'メリークリスマス！',
+                subtitle: '喜びと幸せを祈ります',
+                location: '📍 {country}{city}',
+                detecting: '位置を検出中...',
+                christmasDay: '今日はクリスマスです！🎉',
+                countdown: 'クリスマスまであと {days} 日',
+                timezone: 'タイムゾーン: {timezone}'
+            },
+            'ko': {
+                greeting: '메리 크리스마스!',
+                subtitle: '기쁨과 행복을祝愿합니다',
+                location: '📍 {country} {city}',
+                detecting: '위치 감지 중...',
+                christmasDay: '오늘은 크리스마스! 🎉',
+                countdown: '크리스마스까지 {days} 일',
+                timezone: '시간대: {timezone}'
+            },
+            'pt': {
+                greeting: 'Feliz Natal!',
+                subtitle: 'Deseando alegria e felicidade',
+                location: '📍 {city}, {country}',
+                detecting: 'Detectando sua localização...',
+                christmasDay: 'É Natal! 🎉',
+                countdown: 'Natal em: {days} dias',
+                timezone: 'Fuso horário: {timezone}'
+            },
+            'ru': {
+                greeting: 'С Рождеством!',
+                subtitle: 'Желаем радости и счастья',
+                location: '📍 {city}, {country}',
+                detecting: 'Определение местоположения...',
+                christmasDay: 'Сегодня Рождество! 🎉',
+                countdown: 'До Рождества: {days} дней',
+                timezone: 'Часовой пояс: {timezone}'
+            },
+            'ar': {
+                greeting: 'عيد ميلاد مجيد!',
+                subtitle: 'أتمنى لك الفرح والسعادة',
+                location: '📍 {city}, {country}',
+                detecting: 'جاري تحديد موقعك...',
+                christmasDay: 'اليوم هو عيد الميلاد! 🎉',
+                countdown: 'عيد الميلاد خلال: {days} أيام',
+                timezone: 'المنطقة الزمنية: {timezone}'
+            },
+            'it': {
+                greeting: 'Buon Natale!',
+                subtitle: 'Augurando gioia e felicità',
+                location: '📍 {city}, {country}',
+                detecting: 'Rilevamento posizione...',
+                christmasDay: 'È Natale! 🎉',
+                countdown: 'Natale tra: {days} giorni',
+                timezone: 'Fuso orario: {timezone}'
+            }
+        };
+
+        // 国家到语言的映射
+        const countryToLanguage = {
+            'CN': 'zh', 'TW': 'zh', 'HK': 'zh', 'SG': 'zh',
+            'US': 'en', 'GB': 'en', 'CA': 'en', 'AU': 'en', 'NZ': 'en', 'IE': 'en',
+            'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'PE': 'es',
+            'FR': 'fr', 'BE': 'fr', 'CH': 'fr', 'LU': 'fr',
+            'DE': 'de', 'AT': 'de', 'CH': 'de',
+            'JP': 'ja',
+            'KR': 'ko',
+            'BR': 'pt', 'PT': 'pt',
+            'RU': 'ru',
+            'SA': 'ar', 'AE': 'ar', 'EG': 'ar', 'MA': 'ar',
+            'IT': 'it'
+        };
+
+        let currentLanguage = 'en';
+        let userTimezone = 'UTC';
+        let locationData = null;
+        let musicPlaying = false;
+
+        // 创建雪花
+        function createSnowflakes() {
+            const snowflakeChars = ['❄', '❅', '❆', '✻', '✼', '❋'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const snowflake = document.createElement('div');
+                    snowflake.className = 'snowflake';
+                    snowflake.innerHTML = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+                    snowflake.style.left = Math.random() * 100 + 'vw';
+                    snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                    snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+                    document.body.appendChild(snowflake);
+
+                    setTimeout(() => snowflake.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        // 创建装饰品
+        function createDecorations() {
+            const decorations = ['🎁', '⭐', '🔔', '🎅', '🦌', '❄️', '🎄'];
+            const container = document.getElementById('decorations');
+
+            for (let i = 0; i < 15; i++) {
+                const decoration = document.createElement('div');
+                decoration.className = 'decoration';
+                decoration.innerHTML = decorations[Math.floor(Math.random() * decorations.length)];
+                decoration.style.left = Math.random() * 90 + 5 + '%';
+                decoration.style.top = Math.random() * 80 + 10 + '%';
+                decoration.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                decoration.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(decoration);
+            }
+        }
+
+        // 检测用户位置
+        async function detectLocation() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+
+                locationData = {
+                    city: data.city || 'Unknown',
+                    country: data.country_name || 'Unknown',
+                    countryCode: data.country_code,
+                    timezone: data.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+                };
+
+                userTimezone = locationData.timezone;
+                currentLanguage = countryToLanguage[locationData.countryCode] || 'en';
+
+                updateUI();
+            } catch (error) {
+                console.log('Location detection failed, using defaults');
+                locationData = {
+                    city: 'Unknown',
+                    country: 'Unknown',
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+                };
+                userTimezone = locationData.timezone;
+                updateUI();
+            }
+        }
+
+        // 更新UI
+        function updateUI() {
+            const t = translations[currentLanguage];
+
+            document.getElementById('greeting').textContent = t.greeting;
+            document.getElementById('subtitle').textContent = t.subtitle;
+
+            const locationText = t.location
+                .replace('{city}', locationData.city)
+                .replace('{country}', locationData.country);
+
+            const timezoneText = t.timezone.replace('{timezone}', userTimezone);
+
+            document.getElementById('locationInfo').innerHTML =
+                locationText + '<br>' + timezoneText;
+
+            updateTime();
+        }
+
+        // 更新时间
+        function updateTime() {
+            const now = new Date();
+
+            const christmas = new Date(now.getFullYear(), 11, 25);
+            if (now > christmas) {
+                christmas.setFullYear(christmas.getFullYear() + 1);
+            }
+
+            const diffTime = christmas - now;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            const t = translations[currentLanguage];
+
+            if (diffDays === 0 || (diffDays === 365 && now.getMonth() === 11 && now.getDate() === 25)) {
+                document.getElementById('time').textContent = t.christmasDay;
+            } else {
+                document.getElementById('time').textContent = t.countdown.replace('{days}', diffDays);
+            }
+        }
+
+        // 音乐控制
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const icon = document.getElementById('musicIcon');
+
+            if (musicPlaying) {
+                music.pause();
+                icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+            } else {
+                music.play();
+                icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+            }
+            musicPlaying = !musicPlaying;
+        }
+
+        // 初始化
+        window.onload = function() {
+            createSnowflakes();
+            createDecorations();
+            detectLocation();
+
+            // 持续创建雪花
+            setInterval(createSnowflakes, 5000);
+
+            // 更新倒计时
+            setInterval(updateTime, 60000);
+        };
+    </script>
+</body>
+</html>

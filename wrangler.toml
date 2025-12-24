@@ -1,0 +1,12 @@
+name = "christmas"
+compatibility_date = "2024-12-24"
+
+[env.production]
+routes = [
+  { pattern = "christmas.shijian.us/*", zone_name = "shijian.us" }
+]
+
+[env.preview]
+routes = [
+  { pattern = "christmas-preview.shijian.us/*", zone_name = "shijian.us" }
+]
