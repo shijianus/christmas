@@ -1,3 +1,117 @@
+// Builtin virtual cards for new users
+const BUILTIN_CARDS = [
+  {
+    id: 'builtin_1',
+    message: 'Merry Christmas! Wishing you joy and happiness this holiday season!',
+    image: null,
+    author: 'Santa Claus 🎅',
+    language: 'en-US',
+    country: 'US',
+    timestamp: '2024-12-25T00:00:00.000Z',
+    type: 'card',
+    isBuiltin: true
+  },
+  {
+    id: 'builtin_2',
+    message: '圣诞快乐！愿你度过一个温馨快乐的圣诞节！',
+    image: null,
+    author: '圣诞老人 🎄',
+    language: 'zh-CN',
+    country: 'CN',
+    timestamp: '2024-12-25T00:00:00.000Z',
+    type: 'card',
+    isBuiltin: true
+  },
+  {
+    id: 'builtin_3',
+    message: 'Joyeux Noël! Que la magie de Noël illumine votre foyer!',
+    image: null,
+    author: 'Père Noël 🎅',
+    language: 'fr-FR',
+    country: 'FR',
+    timestamp: '2024-12-25T00:00:00.000Z',
+    type: 'card',
+    isBuiltin: true
+  },
+  {
+    id: 'builtin_4',
+    message: 'Frohe Weihnachten! Frieden und Freude für Sie und Ihre Familie!',
+    image: null,
+    author: 'Weihnachtsmann 🎄',
+    language: 'de-DE',
+    country: 'DE',
+    timestamp: '2024-12-25T00:00:00.000Z',
+    type: 'card',
+    isBuiltin: true
+  },
+  {
+    id: 'builtin_5',
+    message: 'メリークリスマス！素敵な休暇をお過ごしください！',
+    image: null,
+    author: 'サンタクロース 🎅',
+    language: 'ja-JP',
+    country: 'JP',
+    timestamp: '2024-12-25T00:00:00.000Z',
+    type: 'card',
+    isBuiltin: true
+  },
+  {
+    id: 'builtin_6',
+    message: '¡Feliz Navidad! ¡Que disfrutes de unas fiestas maravillosas!',
+    image: null,
+    author: 'Santa Claus 🎅',
+    language: 'es-ES',
+    country: 'ES',
+    timestamp: '2024-12-25T00:00:00.000Z',
+    type: 'card',
+    isBuiltin: true
+  },
+  {
+    id: 'builtin_7',
+    message: 'Buon Natale! Auguri per un periodo festivo pieno di gioia!',
+    image: null,
+    author: 'Babbo Natale 🎅',
+    language: 'it-IT',
+    country: 'IT',
+    timestamp: '2024-12-25T00:00:00.000Z',
+    type: 'card',
+    isBuiltin: true
+  },
+  {
+    id: 'builtin_8',
+    message: '메리 크리스마스! 행복한 연말 보내세요!',
+    image: null,
+    author: '산타클로스 🎅',
+    language: 'ko-KR',
+    country: 'KR',
+    timestamp: '2024-12-25T00:00:00.000Z',
+    type: 'card',
+    isBuiltin: true
+  },
+  {
+    id: 'builtin_9',
+    message: 'Веселого Рождества! Пусть праздник принесет радость и счастье!',
+    image: null,
+    author: 'Дед Мороз 🎅',
+    language: 'ru-RU',
+    country: 'RU',
+    timestamp: '2024-12-25T00:00:00.000Z',
+    type: 'card',
+    isBuiltin: true
+  },
+  {
+    id: 'builtin_10',
+    message: 'God Jul! Önskar dig en fridfull och joyfull julhelg!',
+    image: null,
+    author: 'Tomten 🎅',
+    language: 'sv-SE',
+    country: 'SE',
+    timestamp: '2024-12-25T00:00:00.000Z',
+    type: 'card',
+    isBuiltin: true
+  }
+];
+
 // API endpoint for managing Christmas cards
 export async function onRequest(context) {
   const { request, env } = context;
@@ -17,12 +131,18 @@ export async function onRequest(context) {
     // POST - Create new card
     if (request.method === 'POST') {
       const data = await request.json();
+
+      // Extract country from Cloudflare request data
+      const cf = request.cf || {};
+      const country = cf.country || data.language || 'unknown';
+
       const newCard = {
         id: Date.now().toString(),
         message: data.message || '',
         image: data.image || null,
         author: data.author || '匿名',
-        language: data.language || 'unknown',
+        language: data.language || country,
+        country: country,
         timestamp: new Date().toISOString(),
         type: 'card'
       };
@@ -89,14 +209,24 @@ export async function onRequest(context) {
         const cards = await env.CHRISTMAS_KV.get('christmas_cards', { type: 'json' }) || [];
         const cardArray = Array.isArray(cards) ? cards : [];
 
+        // If KV is empty, use builtin cards
         if (cardArray.length === 0) {
-          return new Response(JSON.stringify({ error: 'No cards available' }), {
-            status: 404,
+          const randomBuiltin = BUILTIN_CARDS[Math.floor(Math.random() * BUILTIN_CARDS.length)];
+          return new Response(JSON.stringify(randomBuiltin), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' }
           });
         }
 
-        // Random selection
+        // KV has cards, prioritize them (90% KV, 10% builtin for variety)
+        const useBuiltin = Math.random() < 0.1;
+        if (useBuiltin) {
+          const randomBuiltin = BUILTIN_CARDS[Math.floor(Math.random() * BUILTIN_CARDS.length)];
+          return new Response(JSON.stringify(randomBuiltin), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+
+        // Random selection from KV
         const randomCard = cardArray[Math.floor(Math.random() * cardArray.length)];
 
         return new Response(JSON.stringify(randomCard), {

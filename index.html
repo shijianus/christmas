@@ -562,20 +562,21 @@
         .santa-sleigh {
             position: fixed;
             top: 10%;
-            left: -200px;
+            right: -200px;
             width: 150px;
             opacity: 0.8;
             animation: fly 20s linear infinite;
             z-index: 0;
             pointer-events: none;
+            transform: scaleX(-1); /* Flip to face left */
         }
 
         @keyframes fly {
-            0% { left: -200px; transform: translateY(0); }
-            25% { transform: translateY(20px); }
-            50% { transform: translateY(0); }
-            75% { transform: translateY(-20px); }
-            100% { left: 110%; transform: translateY(0); }
+            0% { right: -200px; transform: translateY(0) scaleX(-1); }
+            25% { transform: translateY(20px) scaleX(-1); }
+            50% { transform: translateY(0) scaleX(-1); }
+            75% { transform: translateY(-20px) scaleX(-1); }
+            100% { right: 110%; transform: translateY(0) scaleX(-1); }
         }
 
         /* 背景裝飾物動畫 */
@@ -680,6 +681,126 @@
             }
             50% {
                 transform: translateY(-20px) scale(1.1);
+            }
+        }
+
+        /* 聖誕老人裝飾 */
+        .santa-decoration {
+            position: fixed;
+            font-size: 45px;
+            bottom: -60px;
+            animation: santaWave 18s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        @keyframes santaWave {
+            0% {
+                bottom: -60px;
+                left: -50px;
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-10deg);
+            }
+            50% {
+                transform: rotate(10deg);
+            }
+            75% {
+                transform: rotate(-5deg);
+            }
+            100% {
+                bottom: 110vh;
+                left: 105%;
+                transform: rotate(0deg);
+            }
+        }
+
+        /* 雪花裝飾 */
+        .snowflake-decoration {
+            position: fixed;
+            font-size: 28px;
+            top: -40px;
+            animation: snowfall 12s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        @keyframes snowfall {
+            0% {
+                top: -40px;
+                transform: translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateX(30px) rotate(90deg);
+            }
+            50% {
+                transform: translateX(-20px) rotate(180deg);
+            }
+            75% {
+                transform: translateX(20px) rotate(270deg);
+            }
+            100% {
+                top: 110vh;
+                transform: translateX(0) rotate(360deg);
+            }
+        }
+
+        /* 糖果手杖裝飾 */
+        .candy-cane-decoration {
+            position: fixed;
+            font-size: 32px;
+            top: -50px;
+            animation: candyFall 14s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        @keyframes candyFall {
+            0% {
+                top: -50px;
+                transform: rotate(0deg) translateX(0);
+            }
+            50% {
+                transform: rotate(180deg) translateX(15px);
+            }
+            100% {
+                top: 110vh;
+                transform: rotate(360deg) translateX(0);
+            }
+        }
+
+        /* 鈴鐺裝飾 */
+        .bell-decoration {
+            position: fixed;
+            font-size: 30px;
+            animation: bellRing 4s ease-in-out infinite;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        @keyframes bellRing {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            10% {
+                transform: rotate(15deg);
+            }
+            20% {
+                transform: rotate(-15deg);
+            }
+            30% {
+                transform: rotate(10deg);
+            }
+            40% {
+                transform: rotate(-10deg);
+            }
+            50% {
+                transform: rotate(0deg);
             }
         }
 
@@ -1397,25 +1518,62 @@
         <div class="floating-gift" style="left: 60%; animation-delay: 1s;">🎁</div>
         <div class="floating-gift" style="left: 80%; animation-delay: 3s;">🎁</div>
 
-        <!-- 閃爍的星星 -->
+        <!-- 閃爍的星星 (more stars) -->
         <div class="twinkling-star">⭐</div>
         <div class="twinkling-star" style="left: 15%; top: 20%; animation-delay: 1s;">✨</div>
         <div class="twinkling-star" style="left: 35%; top: 40%; animation-delay: 2s;">⭐</div>
         <div class="twinkling-star" style="left: 55%; top: 15%; animation-delay: 3s;">✨</div>
         <div class="twinkling-star" style="left: 75%; top: 35%; animation-delay: 1.5s;">⭐</div>
         <div class="twinkling-star" style="left: 90%; top: 25%; animation-delay: 2.5s;">✨</div>
+        <div class="twinkling-star" style="left: 8%; top: 50%; animation-delay: 0.5s;">⭐</div>
+        <div class="twinkling-star" style="left: 45%; top: 65%; animation-delay: 3.5s;">✨</div>
+        <div class="twinkling-star" style="left: 62%; top: 8%; animation-delay: 1.8s;">⭐</div>
+        <div class="twinkling-star" style="left: 82%; top: 72%; animation-delay: 4.2s;">✨</div>
 
-        <!-- 驯鹿裝飾 -->
+        <!-- 驯鹿裝飾 (more reindeer) -->
         <div class="reindeer-decoration">🦌</div>
         <div class="reindeer-decoration" style="left: 70%; animation-delay: 3s;">🦌</div>
+        <div class="reindeer-decoration" style="left: 25%; animation-delay: 7s;">🦌</div>
+        <div class="reindeer-decoration" style="left: 85%; animation-delay: 12s;">🦌</div>
 
-        <!-- 聖誕樹裝飾 -->
+        <!-- 聖誕樹裝飾 (more trees) -->
         <div class="tree-decoration">🎄</div>
         <div class="tree-decoration" style="left: 85%; top: 60%; animation-delay: 2s;">🎄</div>
+        <div class="tree-decoration" style="left: 15%; top: 50%; animation-delay: 6s;">🎄</div>
+        <div class="tree-decoration" style="left: 65%; top: 75%; animation-delay: 9s;">🎄</div>
 
-        <!-- 雪人裝飾 -->
+        <!-- 雪人裝飾 (more snowmen) -->
         <div class="snowman-decoration">⛄</div>
         <div class="snowman-decoration" style="left: 25%; top: 70%; animation-delay: 4s;">⛄</div>
+        <div class="snowman-decoration" style="left: 50%; top: 30%; animation-delay: 8s;">⛄</div>
+        <div class="snowman-decoration" style="left: 75%; top: 55%; animation-delay: 11s;">⛄</div>
+
+        <!-- 聖誕老人裝飾 (new Santa emojis) -->
+        <div class="santa-decoration">🎅</div>
+        <div class="santa-decoration" style="left: 20%; animation-delay: 5s;">🎅</div>
+        <div class="santa-decoration" style="left: 60%; animation-delay: 10s;">🎅</div>
+        <div class="santa-decoration" style="left: 80%; animation-delay: 15s;">🎅</div>
+
+        <!-- 雪花裝飾 (new snowflakes) -->
+        <div class="snowflake-decoration">❄️</div>
+        <div class="snowflake-decoration" style="left: 12%; animation-delay: 2s;">❄️</div>
+        <div class="snowflake-decoration" style="left: 33%; animation-delay: 6s;">❄️</div>
+        <div class="snowflake-decoration" style="left: 57%; animation-delay: 9s;">❄️</div>
+        <div class="snowflake-decoration" style="left: 78%; animation-delay: 13s;">❄️</div>
+        <div class="snowflake-decoration" style="left: 92%; animation-delay: 16s;">❄️</div>
+
+        <!-- 糖果手杖裝飾 (new candy canes) -->
+        <div class="candy-cane-decoration">🍬</div>
+        <div class="candy-cane-decoration" style="left: 18%; animation-delay: 4s;">🍬</div>
+        <div class="candy-cane-decoration" style="left: 42%; animation-delay: 8s;">🍬</div>
+        <div class="candy-cane-decoration" style="left: 68%; animation-delay: 12s;">🍬</div>
+        <div class="candy-cane-decoration" style="left: 88%; animation-delay: 16s;">🍬</div>
+
+        <!-- 鈴鐺裝飾 (new bells) -->
+        <div class="bell-decoration">🔔</div>
+        <div class="bell-decoration" style="left: 28%; top: 45%; animation-delay: 7s;">🔔</div>
+        <div class="bell-decoration" style="left: 53%; top: 62%; animation-delay: 14s;">🔔</div>
+        <div class="bell-decoration" style="left: 73%; top: 38%; animation-delay: 11s;">🔔</div>
     </div>
 
     <!-- Gift Opening Screen -->
@@ -3950,7 +4108,7 @@
                 message: finalMessage,
                 image: uploadedImageData,
                 author: isAnonymous ? '匿名' : (author || '神秘人'),
-                language: navigator.language || 'unknown'
+                language: ''  // Backend will detect from IP
             };
 
             try {
@@ -4066,6 +4224,10 @@
         function displayReceivedCard(card) {
             const container = document.getElementById('receivedCardContent');
 
+            // Get country display name
+            const countryDisplay = card.country || '未知国家';
+            const countryEmoji = getCountryEmoji(countryDisplay);
+
             let html = `
                 <h2 style="font-family: 'Mountains of Christmas', cursive; font-size: 2em; color: #FFD700; text-align: center; margin-bottom: 20px;">
                     💌 你收到的祝福
@@ -4080,7 +4242,7 @@
             html += `
                 <div class="card-author">— ${card.author}</div>
                 <div class="card-meta">
-                    语言: ${card.language || '未知'} |
+                    ${countryEmoji} 来自 ${countryDisplay} |
                     时间: ${new Date(card.timestamp).toLocaleDateString()}
                 </div>
             `;
@@ -4090,6 +4252,17 @@
 
             // 触发庆祝
             triggerCelebration();
+        }
+
+        // Get emoji flag for country
+        function getCountryEmoji(countryCode) {
+            const flags = {
+                'US': '🇺🇸', 'CN': '🇨🇳', 'FR': '🇫🇷', 'DE': '🇩🇪',
+                'JP': '🇯🇵', 'ES': '🇪🇸', 'IT': '🇮🇹', 'KR': '🇰🇷',
+                'RU': '🇷🇺', 'SE': '🇸🇪', 'GB': '🇬🇧', 'CA': '🇨🇦',
+                'AU': '🇦🇺', 'BR': '🇧🇷', 'IN': '🇮🇳', 'MX': '🇲🇽'
+            };
+            return flags[countryCode] || '🌍';
         }
 
         // 关闭收到的贺卡
