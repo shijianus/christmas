@@ -2938,7 +2938,54 @@
 
         // ========== 聖誕樹祝福系統 ==========
         let currentMessageType = 'blessing';
-        const API_BASE = 'https://christmas-api.shijian-us.workers.dev'; // Cloudflare Worker API
+
+        // 內置的35+條祝福和心愿
+        const builtinMessages = [
+            // 英文祝福 (10)
+            { type: 'blessing', content: 'May your Christmas be filled with warmth, love, and endless joy!', language: 'en' },
+            { type: 'blessing', content: 'Wishing you peace, happiness, and all the best this holiday season!', language: 'en' },
+            { type: 'blessing', content: 'May your home be filled with laughter and your heart with love this Christmas!', language: 'en' },
+            { type: 'blessing', content: 'Sending you warm hugs and merry wishes across the miles!', language: 'en' },
+            { type: 'blessing', content: 'May this Christmas bring you new hopes, dreams, and beautiful memories!', language: 'en' },
+            { type: 'blessing', content: 'Wishing you a season of joy and a New Year filled with happiness!', language: 'en' },
+            { type: 'blessing', content: 'May the magic of Christmas fill your heart with wonder and delight!', language: 'en' },
+            { type: 'blessing', content: 'Hope your holidays are merry, bright, and full of precious moments!', language: 'en' },
+            { type: 'blessing', content: 'Wishing you love, light, and laughter this Christmas season!', language: 'en' },
+            { type: 'blessing', content: 'May your days be merry and bright, and your Christmas divine!', language: 'en' },
+
+            // 中文祝福 (5)
+            { type: 'blessing', content: '願你的聖誕節充滿溫暖、愛與無盡的喜悅！', language: 'zh' },
+            { type: 'blessing', content: '祝你平安喜樂，聖誕節快樂，新年幸福！', language: 'zh' },
+            { type: 'blessing', content: '願這個聖誕節為你帶來新的希望與美好回憶！', language: 'zh' },
+            { type: 'blessing', content: '聖誕快樂！願你與家人共度溫馨時光！', language: 'zh' },
+            { type: 'blessing', content: '願聖誕的溫暖照亮你的每一天，幸福永伴！', language: 'zh' },
+
+            // 其他語言祝福 (5)
+            { type: 'blessing', content: 'Joyeux Noël! Que la magie de Noël remplisse votre cœur!', language: 'fr' },
+            { type: 'blessing', content: 'Frohe Weihnachten! Möge Ihr Herz voller Freude sein!', language: 'de' },
+            { type: 'blessing', content: '¡Feliz Navidad! Que la ilusión navideña te llene de felicidad!', language: 'es' },
+            { type: 'blessing', content: 'Buon Natale! Auguri di pace e gioia per te!', language: 'it' },
+            { type: 'blessing', content: 'メリークリスマス！素敵な休日をお過ごしください！', language: 'ja' },
+
+            // 英文心愿 (10)
+            { type: 'wish', content: 'I wish to spend more quality time with my family next year', language: 'en' },
+            { type: 'wish', content: 'I hope to learn a new skill or hobby in the coming year', language: 'en' },
+            { type: 'wish', content: 'I wish for good health for my parents and loved ones', language: 'en' },
+            { type: 'wish', content: 'I hope to travel and explore new places next year', language: 'en' },
+            { type: 'wish', content: 'I wish to find more balance between work and life', language: 'en' },
+            { type: 'wish', content: 'I hope to read more books and expand my knowledge', language: 'en' },
+            { type: 'wish', content: 'I wish to make new meaningful friendships', language: 'en' },
+            { type: 'wish', content: 'I hope to be more patient and understanding with others', language: 'en' },
+            { type: 'wish', content: 'I wish to appreciate the small moments in life more', language: 'en' },
+            { type: 'wish', content: 'I hope to stay positive and hopeful even in difficult times', language: 'en' },
+
+            // 中文心愿 (5)
+            { type: 'wish', content: '我希望明年能多陪陪家人，珍惜相處時光', language: 'zh' },
+            { type: 'wish', content: '我願能學會一項新技能，充實自己', language: 'zh' },
+            { type: 'wish', content: '希望家人和朋友都身體健康，平安喜樂', language: 'zh' },
+            { type: 'wish', content: '我願明年能去旅行，看看外面的世界', language: 'zh' },
+            { type: 'wish', content: '希望自己在工作上能有新的突破和成長', language: 'zh' }
+        ];
 
         function openChristmasTree() {
             document.getElementById('christmasTreeModal').style.display = 'flex';
@@ -2962,39 +3009,36 @@
             document.getElementById('treeMessage').placeholder = placeholder;
         }
 
-        async function loadTreeStats() {
-            try {
-                // 使用内置数据作为fallback
-                const stats = {
-                    total: 35,
-                    wishes: 15,
-                    blessings: 20,
-                    userMessages: 0
-                };
+        function loadTreeStats() {
+            // 从localStorage获取用户留言
+            const userMessages = JSON.parse(localStorage.getItem('christmasTreeMessages') || '[]');
+            const userBlessings = userMessages.filter(m => m.type === 'blessing').length;
+            const userWishes = userMessages.filter(m => m.type === 'wish').length;
 
-                document.getElementById('totalBlessingsCount').textContent = stats.blessings;
-                document.getElementById('totalWishesCount').textContent = stats.wishes;
-                document.getElementById('userMessagesCount').textContent = stats.userMessages;
-            } catch (error) {
-                console.error('Failed to load stats:', error);
-            }
+            // 总数 = 内置 + 用户
+            const totalBlessings = builtinMessages.filter(m => m.type === 'blessing').length + userBlessings;
+            const totalWishes = builtinMessages.filter(m => m.type === 'wish').length + userWishes;
+
+            document.getElementById('totalBlessingsCount').textContent = totalBlessings;
+            document.getElementById('totalWishesCount').textContent = totalWishes;
+            document.getElementById('userMessagesCount').textContent = userMessages.length;
         }
 
-        async function loadRecentMessages() {
-            try {
-                // 使用内置的最近消息
-                const recentMessages = [
-                    { type: 'blessing', content: 'May your Christmas be filled with warmth, love, and endless joy!', language: 'en', is_builtin: 1 },
-                    { type: 'wish', content: 'I wish to spend more quality time with my family next year', language: 'en', is_builtin: 1 },
-                    { type: 'blessing', content: '願你的聖誕節充滿溫暖、愛與無盡的喜悅！', language: 'zh', is_builtin: 1 },
-                    { type: 'blessing', content: 'Frohe Weihnachten! Möge Ihr Herz voller Freude sein!', language: 'de', is_builtin: 1 }
-                ];
+        function loadRecentMessages() {
+            // 获取用户消息
+            const userMessages = JSON.parse(localStorage.getItem('christmasTreeMessages') || '[]');
 
-                const container = document.getElementById('recentMessages');
-                container.innerHTML = recentMessages.map(msg => createMessageCard(msg)).join('');
-            } catch (error) {
-                console.error('Failed to load recent messages:', error);
-            }
+            // 合并内置消息和用户消息，优先显示用户消息
+            const allMessages = [
+                ...userMessages.map(m => ({...m, is_builtin: 0})),
+                ...builtinMessages.map(m => ({...m, is_builtin: 1}))
+            ];
+
+            // 随机选择4条显示
+            const recentMessages = allMessages.sort(() => Math.random() - 0.5).slice(0, 4);
+
+            const container = document.getElementById('recentMessages');
+            container.innerHTML = recentMessages.map(msg => createMessageCard(msg)).join('');
         }
 
         function createMessageCard(msg) {
@@ -3014,7 +3058,7 @@
             `;
         }
 
-        async function submitTreeMessage() {
+        function submitTreeMessage() {
             const content = document.getElementById('treeMessage').value.trim();
             const authorName = document.getElementById('treeAuthorName').value.trim();
             const isAnonymous = document.getElementById('isAnonymous').checked;
@@ -3033,54 +3077,63 @@
             submitBtn.disabled = true;
             submitBtn.textContent = '🎄 掛上樹中...';
 
-            try {
-                // 创建交换消息（内置随机消息）
-                const exchangeMessages = [
-                    { type: 'blessing', content: 'May your days be merry and bright, and your Christmas divine! 🎄', language: 'en' },
-                    { type: 'blessing', content: '願聖誕的溫暖照亮你的每一天，幸福永伴！ ✨', language: 'zh' },
-                    { type: 'blessing', content: 'Joyeux Noël! Que la magie de Noël remplisse votre cœur! 🌟', language: 'fr' },
-                    { type: 'wish', content: 'I hope to stay positive and hopeful even in difficult times 💪', language: 'en' },
-                    { type: 'blessing', content: '¡Feliz Navidad! Que la ilusión navideña te llene de felicidad! 🎅', language: 'es' },
-                    { type: 'wish', content: '我希望明年能多陪陪家人，珍惜相處時光 👨‍👩‍👧‍👦', language: 'zh' }
-                ];
+            // 保存到localStorage
+            const userMessages = JSON.parse(localStorage.getItem('christmasTreeMessages') || '[]');
+            const newMessage = {
+                type: currentMessageType,
+                content: content,
+                language: currentLanguage,
+                authorName: isAnonymous ? null : authorName,
+                isAnonymous: isAnonymous,
+                timestamp: new Date().toISOString()
+            };
 
-                const randomMessage = exchangeMessages[Math.floor(Math.random() * exchangeMessages.length)];
+            userMessages.push(newMessage);
 
-                // 显示交换的消息
-                const container = document.getElementById('exchangeMessageContainer');
-                const messageDiv = document.getElementById('exchangeMessage');
-                const metaDiv = document.getElementById('exchangeMeta');
-
-                messageDiv.innerHTML = randomMessage.content;
-                metaDiv.innerHTML = `來自 ${randomMessage.language === 'zh' ? '中文' : randomMessage.language === 'en' ? '英文' : randomMessage.language === 'fr' ? '法文' : randomMessage.language === 'es' ? '西班牙文' : '其他語言'}的${randomMessage.type === 'blessing' ? '祝福' : '心愿'} 🌍`;
-                container.style.display = 'block';
-
-                // 清空表单
-                document.getElementById('treeMessage').value = '';
-                document.getElementById('treeAuthorName').value = '';
-
-                // 庆祝效果
-                launchFireworksShow();
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#FFD700', '#FFA500', '#FF6347', '#FF69B4', '#00FF00']
-                });
-
-                // 更新统计
-                setTimeout(() => {
-                    loadTreeStats();
-                    loadRecentMessages();
-                }, 500);
-
-            } catch (error) {
-                console.error('Failed to submit message:', error);
-                alert('提交失敗，請稍後再試！');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = '✨ 掛上祝福樹並接收回禮 ✨';
+            // 限制最多保存100条用户消息
+            if (userMessages.length > 100) {
+                userMessages.shift();
             }
+
+            localStorage.setItem('christmasTreeMessages', JSON.stringify(userMessages));
+
+            // 随机选择一条内置消息作为回礼
+            const randomMessage = builtinMessages[Math.floor(Math.random() * builtinMessages.length)];
+
+            // 显示交换的消息
+            const container = document.getElementById('exchangeMessageContainer');
+            const messageDiv = document.getElementById('exchangeMessage');
+            const metaDiv = document.getElementById('exchangeMeta');
+
+            messageDiv.innerHTML = randomMessage.content;
+            const languageNames = {
+                'en': '英文', 'zh': '中文', 'fr': '法文', 'de': '德文',
+                'es': '西班牙文', 'it': '意大利文', 'ja': '日文'
+            };
+            metaDiv.innerHTML = `來自 ${languageNames[randomMessage.language] || '其他語言'}的${randomMessage.type === 'blessing' ? '祝福' : '心愿'} 🌍`;
+            container.style.display = 'block';
+
+            // 清空表单
+            document.getElementById('treeMessage').value = '';
+            document.getElementById('treeAuthorName').value = '';
+
+            // 庆祝效果
+            launchFireworksShow();
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#FFD700', '#FFA500', '#FF6347', '#FF69B4', '#00FF00']
+            });
+
+            // 更新统计
+            setTimeout(() => {
+                loadTreeStats();
+                loadRecentMessages();
+            }, 500);
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = '✨ 掛上祝福樹並接收回禮 ✨';
         }
 
         function addOrnaments() {
