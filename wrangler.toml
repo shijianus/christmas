@@ -1,3 +1,8 @@
 name = "christmas"
 compatibility_date = "2024-12-24"
 pages_build_output_dir = "."
+
+# KV namespace bindings for Pages Functions
+[[kv_namespaces]]
+binding = "CHRISTMAS_KV"
+id = "1905d440298d4a9a94d09e8791557fd6"

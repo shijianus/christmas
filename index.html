@@ -980,6 +980,396 @@
                 padding: 15px;
             }
         }
+
+        /* ========== 圣诞树活动样式 ========== */
+        .christmas-tree-activity {
+            margin: 60px auto 40px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 95%;
+            text-align: center;
+        }
+
+        .tree-display-area {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .interactive-tree {
+            font-size: 120px;
+            cursor: pointer;
+            animation: treeGlow 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .interactive-tree:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes treeGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 50px rgba(255, 215, 0, 0.8));
+            }
+        }
+
+        .tree-ornaments {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .ornament {
+            position: absolute;
+            font-size: 24px;
+            animation: ornamentFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes ornamentFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(10deg);
+            }
+        }
+
+        .activity-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .activity-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn-create-card {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #0a0f1e;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-create-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .btn-open-gift {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            border: 2px solid #FFD700;
+        }
+
+        .btn-open-gift:hover {
+            background: rgba(255, 215, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .tree-stats {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #FFD700;
+            font-family: 'Mountains of Christmas', cursive;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .stat-label {
+            color: #FFE4B5;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        /* 模态框样式 */
+        .card-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a5c1a 0%, #0d3d0d 100%);
+            padding: 40px;
+            border-radius: 30px;
+            border: 4px solid #FFD700;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 215, 0, 0.4);
+        }
+
+        .modal-title {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 2.5em;
+            color: #FFD700;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #FFD700;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .form-group textarea,
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            color: #FFE4B5;
+            font-size: 1em;
+            font-family: inherit;
+        }
+
+        .form-group textarea:focus,
+        .form-group input[type="text"]:focus {
+            outline: none;
+            border-color: #FFD700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-upload-btn {
+            border: 2px dashed rgba(255, 215, 0, 0.5);
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .file-upload-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #FFD700;
+        }
+
+        .file-upload-wrapper input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #FFE4B5;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #0a0f1e;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+        }
+
+        /* 礼物盒动画 */
+        .gift-selection-area {
+            position: relative;
+            height: 200px;
+            margin: 30px 0;
+        }
+
+        .gift-box-item {
+            position: absolute;
+            font-size: 50px;
+            cursor: pointer;
+            animation: giftShake 2s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes giftShake {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-5deg);
+            }
+            75% {
+                transform: rotate(5deg);
+            }
+        }
+
+        .gift-box-item.highlighted {
+            animation: giftPulse 1s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+        }
+
+        @keyframes giftPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* 贺卡显示样式 */
+        .received-card {
+            background: linear-gradient(135deg, #8B0000 0%, #C41E3A 100%);
+            padding: 40px;
+            border-radius: 20px;
+            border: 4px solid #FFD700;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+            animation: cardReveal 1s ease-out;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        @keyframes cardReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotateY(180deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        .card-message {
+            font-size: 1.3em;
+            color: #FFF;
+            line-height: 1.6;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        .card-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .card-author {
+            text-align: right;
+            color: #FFD700;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .card-meta {
+            color: #FFE4B5;
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -3445,8 +3835,420 @@
             updateNewYearCountdown();
             setInterval(updateNewYearCountdown, 1000);
         }
+
+        // ========== 圣诞树活动功能 ==========
+
+        // 内置祝福语（用于自动生成）
+        const builtinGreetings = [
+            "圣诞快乐！愿你度过一个温馨快乐的圣诞节！",
+            "Wishing you a Merry Christmas filled with love and joy!",
+            "愿你圣诞佳节快乐，新年幸福安康！",
+            "May your Christmas be merry and bright!",
+            "祝您圣诞快乐，万事如意！",
+            "Sending you warm Christmas greetings!",
+            "愿圣诞老人给你带来满满的礼物和祝福！",
+            "Hope Santa brings you everything you wish for!",
+            "祝你有一个美好的圣诞假期！",
+            "Have a wonderful holiday season!",
+            "愿平安、喜乐、幸福伴随你的圣诞节！",
+            "Peace, love, and joy to you this Christmas!",
+            "圣诞快乐！愿你的心愿都能实现！",
+            "May all your Christmas wishes come true!",
+            "祝你圣诞快乐，阖家幸福！",
+            "Merry Christmas to you and your family!"
+        ];
+
+        let uploadedImageData = null;
+        let lastGiftOpenTime = 0;
+        const GIFT_COOLDOWN = 5000; // 5秒冷却
+
+        // 页面加载时初始化
+        function initChristmasTreeActivity() {
+            // 添加装饰品
+            addTreeDecorations();
+
+            // 加载统计
+            loadCardStats();
+        }
+
+        // 添加树装饰品
+        function addTreeDecorations() {
+            const ornaments = ['🎁', '⭐', '❄️', '🔔', '🦌', '⛄'];
+            const container = document.getElementById('treeOrnaments');
+            if (!container) return;
+
+            for (let i = 0; i < 15; i++) {
+                const ornament = document.createElement('div');
+                ornament.className = 'ornament';
+                ornament.textContent = ornaments[Math.floor(Math.random() * ornaments.length)];
+                ornament.style.left = Math.random() * 100 + '%';
+                ornament.style.top = Math.random() * 100 + '%';
+                ornament.style.animationDelay = Math.random() * 4 + 's';
+                container.appendChild(ornament);
+            }
+        }
+
+        // 打开贺卡创作模态框
+        function openCardModal() {
+            document.getElementById('cardModal').style.display = 'flex';
+        }
+
+        // 关闭贺卡创作模态框
+        function closeCardModal() {
+            document.getElementById('cardModal').style.display = 'none';
+            // 清空表单
+            document.getElementById('cardForm').reset();
+            document.getElementById('imagePreviewContainer').style.display = 'none';
+            uploadedImageData = null;
+        }
+
+        // 图片预览
+        function previewImage(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // 检查大小
+            if (file.size > 2 * 1024 * 1024) {
+                alert('图片大小不能超过 2MB！');
+                input.value = '';
+                return;
+            }
+
+            // 读取并预览
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedImageData = e.target.result;
+                const preview = document.getElementById('imagePreview');
+                preview.src = uploadedImageData;
+                document.getElementById('imagePreviewContainer').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 提交贺卡
+        async function submitCard(event) {
+            event.preventDefault();
+
+            const message = document.getElementById('cardMessage').value.trim();
+            const author = document.getElementById('cardAuthor').value.trim();
+            const isAnonymous = document.getElementById('isAnonymous').checked;
+
+            // 验证必填字段
+            if (!message || message.length < 10) {
+                alert('请输入至少 10 个字的祝福语！');
+                return;
+            }
+
+            // 如果为空，自动生成
+            let finalMessage = message;
+            if (message.length < 10) {
+                finalMessage = builtinGreetings[Math.floor(Math.random() * builtinGreetings.length)];
+            }
+
+            // 构建数据
+            const cardData = {
+                message: finalMessage,
+                image: uploadedImageData,
+                author: isAnonymous ? '匿名' : (author || '神秘人'),
+                language: navigator.language || 'unknown'
+            };
+
+            try {
+                // 提交到API
+                const response = await fetch('/api/cards', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(cardData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('提交失败');
+                }
+
+                const result = await response.json();
+                console.log('Card submitted:', result);
+
+                // 关闭模态框
+                closeCardModal();
+
+                // 触发庆祝效果
+                triggerCelebration();
+
+                // 更新统计
+                loadCardStats();
+
+                alert('🎄 你的贺卡已挂在圣诞树上！现在可以拆开一个礼物看看收到的祝福！');
+
+            } catch (error) {
+                console.error('Error submitting card:', error);
+                alert('提交失败，请稍后重试。');
+            }
+        }
+
+        // 打开礼物选择
+        function openGiftSelection() {
+            // 检查冷却
+            const now = Date.now();
+            if (now - lastGiftOpenTime < GIFT_COOLDOWN) {
+                alert('请等待 ' + Math.ceil((GIFT_COOLDOWN - (now - lastGiftOpenTime)) / 1000) + ' 秒后再试');
+                return;
+            }
+
+            // 显示礼物盒
+            const container = document.getElementById('giftSelectionArea');
+            container.innerHTML = '';
+
+            // 创建5个礼物盒
+            for (let i = 0; i < 5; i++) {
+                const gift = document.createElement('div');
+                gift.className = 'gift-box-item';
+                gift.textContent = '🎁';
+                gift.style.left = (20 + i * 15) + '%';
+                gift.style.top = (Math.random() * 60 + 20) + '%';
+                gift.onclick = () => selectGift(gift);
+                container.appendChild(gift);
+            }
+
+            // 2秒后随机高亮一个
+            setTimeout(() => {
+                const gifts = container.querySelectorAll('.gift-box-item');
+                const randomGift = gifts[Math.floor(Math.random() * gifts.length)];
+                randomGift.classList.add('highlighted');
+            }, 2000);
+
+            document.getElementById('giftSelectionModal').style.display = 'flex';
+        }
+
+        // 关闭礼物选择
+        function closeGiftSelection() {
+            document.getElementById('giftSelectionModal').style.display = 'none';
+        }
+
+        // 选择并打开礼物
+        async function selectGift(giftElement) {
+            // 动画
+            giftElement.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                giftElement.style.transform = 'scale(2) rotateY(180deg)';
+                giftElement.style.opacity = '0';
+            }, 300);
+
+            setTimeout(async () => {
+                closeGiftSelection();
+
+                // 获取随机贺卡
+                await openRandomCard();
+
+                lastGiftOpenTime = Date.now();
+            }, 800);
+        }
+
+        // 打开随机贺卡
+        async function openRandomCard() {
+            try {
+                const response = await fetch('/api/cards/random');
+
+                if (!response.ok) {
+                    alert('暂时还没有贺卡，试着先写一张吧！');
+                    return;
+                }
+
+                const card = await response.json();
+                displayReceivedCard(card);
+
+            } catch (error) {
+                console.error('Error fetching card:', error);
+                alert('获取贺卡失败，请稍后重试。');
+            }
+        }
+
+        // 显示收到的贺卡
+        function displayReceivedCard(card) {
+            const container = document.getElementById('receivedCardContent');
+
+            let html = `
+                <h2 style="font-family: 'Mountains of Christmas', cursive; font-size: 2em; color: #FFD700; text-align: center; margin-bottom: 20px;">
+                    💌 你收到的祝福
+                </h2>
+                <div class="card-message">"${card.message}"</div>
+            `;
+
+            if (card.image) {
+                html += `<img src="${card.image}" class="card-image" alt="贺卡图片">`;
+            }
+
+            html += `
+                <div class="card-author">— ${card.author}</div>
+                <div class="card-meta">
+                    语言: ${card.language || '未知'} |
+                    时间: ${new Date(card.timestamp).toLocaleDateString()}
+                </div>
+            `;
+
+            container.innerHTML = html;
+            document.getElementById('receivedCardModal').style.display = 'flex';
+
+            // 触发庆祝
+            triggerCelebration();
+        }
+
+        // 关闭收到的贺卡
+        function closeReceivedCard() {
+            document.getElementById('receivedCardModal').style.display = 'none';
+        }
+
+        // 加载统计数据
+        async function loadCardStats() {
+            try {
+                const response = await fetch('/api/cards/stats');
+                if (!response.ok) return;
+
+                const stats = await response.json();
+
+                document.getElementById('totalCards').textContent = stats.totalCards || 0;
+                document.getElementById('todayCards').textContent = stats.todayCards || 0;
+                document.getElementById('countryCount').textContent = stats.languages || 0;
+
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // 触发庆祝效果
+        function triggerCelebration() {
+            // 烟花效果
+            if (typeof createFirework === 'function') {
+                createFirework(window.innerWidth / 2, window.innerHeight / 2);
+            }
+
+            // 彩纸效果
+            if (typeof confetti === 'object') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        // 页面加载时初始化
+        window.addEventListener('load', function() {
+            createSnowflakes();
+            initChristmasTreeActivity();
+
+            // 持續創建雪花
+            setInterval(createSnowflakes, 5000);
+        });
     </script>
 
+        </div>
+    </div>
+
+
+    <!-- 圣诞树活动区域 -->
+    <div class="christmas-tree-activity">
+        <h2 style="font-family: 'Mountains of Christmas', cursive; font-size: 3em; color: #FFD700; text-shadow: 0 0 20px rgba(255,215,0,0.5); margin-bottom: 20px;">
+            🎄 圣诞树祝福活动 🎄
+        </h2>
+        <p style="color: #FFE4B5; font-size: 1.2em; margin-bottom: 30px;">
+            写一张贺卡挂在树上，然后随机拆开一份来自世界各地的祝福
+        </p>
+
+        <!-- 圣诞树显示区域 -->
+        <div class="tree-display-area">
+            <div class="interactive-tree" onclick="openCardModal()">🎄</div>
+            <div class="tree-ornaments" id="treeOrnaments"></div>
+        </div>
+
+        <!-- 活动按钮 -->
+        <div class="activity-buttons">
+            <button class="activity-btn btn-create-card" onclick="openCardModal()">
+                📝 写贺卡
+            </button>
+            <button class="activity-btn btn-open-gift" onclick="openGiftSelection()">
+                🎁 拆礼物
+            </button>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="tree-stats" id="treeStats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalCards">-</div>
+                <div class="stat-label">总贺卡数</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="todayCards">-</div>
+                <div class="stat-label">今日新增</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="countryCount">-</div>
+                <div class="stat-label">参与国家</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 贺卡创作模态框 -->
+    <div class="card-modal" id="cardModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCardModal()">✕</button>
+            <h2 class="modal-title">📝 写一张圣诞贺卡</h2>
+
+            <form id="cardForm" onsubmit="submitCard(event)">
+                <div class="form-group">
+                    <label for="cardMessage">* 祝福语（必填）</label>
+                    <textarea id="cardMessage" rows="5" maxlength="500" placeholder="写下你的圣诞祝福..."></textarea>
+                    <small style="color: #FFE4B5; opacity: 0.8;">最少 10 个字，最多 500 个字</small>
+                </div>
+
+                <div class="form-group">
+                    <label>上传图片（可选）</label>
+                    <div class="file-upload-wrapper">
+                        <div class="file-upload-btn">📷 选择图片</div>
+                        <input type="file" id="cardImage" accept="image/*" onchange="previewImage(this)">
+                    </div>
+                    <div id="imagePreviewContainer" style="display: none;">
+                        <img id="imagePreview" class="preview-image" alt="预览">
+                    </div>
+                    <small style="color: #FFE4B5; opacity: 0.8;">支持 JPG、PNG、GIF，最大 2MB</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="cardAuthor">昵称（可选）</label>
+                    <input type="text" id="cardAuthor" maxlength="50" placeholder="你的名字">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="isAnonymous" checked>
+                        <label for="isAnonymous">匿名发送</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">🎄 挂在圣诞树上</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 礼物选择模态框 -->
+    <div class="card-modal" id="giftSelectionModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeGiftSelection()">✕</button>
+            <h2 class="modal-title">🎁 选择一个礼物盒</h2>
+            <p style="text-align: center; color: #FFE4B5; margin-bottom: 20px;">
+                点击任意礼物盒拆开...
+            </p>
+            <div class="gift-selection-area" id="giftSelectionArea"></div>
+        </div>
+    </div>
+
+    <!-- 贺卡显示模态框 -->
+    <div class="card-modal" id="receivedCardModal">
+        <div class="modal-content" style="background: transparent; border: none; box-shadow: none;">
+            <div class="received-card" id="receivedCardContent">
+                <!-- 动态填充内容 -->
+            </div>
+            <button class="submit-btn" onclick="closeReceivedCard()" style="margin-top: 20px;">
+                ✨ 关闭
+            </button>
+        </div>
+    </div>
     <!-- 页脚版权信息 -->
     <footer style="text-align: center; padding: 30px 20px; background: rgba(0, 0, 0, 0.3); color: rgba(255, 255, 255, 0.7); font-size: 0.9em; position: relative; z-index: 10;">
         <p style="margin: 5px 0;">
