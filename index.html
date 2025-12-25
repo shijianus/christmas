@@ -578,6 +578,111 @@
             100% { left: 110%; transform: translateY(0); }
         }
 
+        /* 背景裝飾物動畫 */
+        .floating-gift {
+            position: fixed;
+            font-size: 30px;
+            top: -50px;
+            animation: floatDown 15s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        @keyframes floatDown {
+            0% {
+                top: -50px;
+                transform: rotate(0deg) translateX(0);
+            }
+            50% {
+                transform: rotate(180deg) translateX(20px);
+            }
+            100% {
+                top: 110vh;
+                transform: rotate(360deg) translateX(0);
+            }
+        }
+
+        .twinkling-star {
+            position: fixed;
+            font-size: 25px;
+            animation: twinkle 3s ease-in-out infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .reindeer-decoration {
+            position: fixed;
+            font-size: 40px;
+            bottom: -50px;
+            animation: runAcross 25s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes runAcross {
+            0% {
+                left: -100px;
+                bottom: 10%;
+            }
+            100% {
+                left: 110%;
+                bottom: 15%;
+            }
+        }
+
+        .tree-decoration {
+            position: fixed;
+            font-size: 50px;
+            top: -60px;
+            animation: treeFloat 20s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        @keyframes treeFloat {
+            0% {
+                top: -60px;
+                transform: rotate(-5deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+            100% {
+                top: 110vh;
+                transform: rotate(-5deg);
+            }
+        }
+
+        .snowman-decoration {
+            position: fixed;
+            font-size: 35px;
+            animation: snowmanBounce 8s ease-in-out infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes snowmanBounce {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-20px) scale(1.1);
+            }
+        }
+
         /* 拍立得照片牆 */
         .polaroid-container {
             margin: 30px auto;
@@ -888,6 +993,36 @@
 
     <!-- 飛行的聖誕老人 -->
     <img src="https://cdn-icons-png.flaticon.com/512/3799/3799988.png" class="santa-sleigh" alt="Santa">
+
+    <!-- 背景裝飾物 -->
+    <div id="backgroundDecorations">
+        <!-- 飄飄的禮物盒 -->
+        <div class="floating-gift">🎁</div>
+        <div class="floating-gift" style="left: 20%; animation-delay: 2s;">🎁</div>
+        <div class="floating-gift" style="left: 40%; animation-delay: 4s;">🎁</div>
+        <div class="floating-gift" style="left: 60%; animation-delay: 1s;">🎁</div>
+        <div class="floating-gift" style="left: 80%; animation-delay: 3s;">🎁</div>
+
+        <!-- 閃爍的星星 -->
+        <div class="twinkling-star">⭐</div>
+        <div class="twinkling-star" style="left: 15%; top: 20%; animation-delay: 1s;">✨</div>
+        <div class="twinkling-star" style="left: 35%; top: 40%; animation-delay: 2s;">⭐</div>
+        <div class="twinkling-star" style="left: 55%; top: 15%; animation-delay: 3s;">✨</div>
+        <div class="twinkling-star" style="left: 75%; top: 35%; animation-delay: 1.5s;">⭐</div>
+        <div class="twinkling-star" style="left: 90%; top: 25%; animation-delay: 2.5s;">✨</div>
+
+        <!-- 驯鹿裝飾 -->
+        <div class="reindeer-decoration">🦌</div>
+        <div class="reindeer-decoration" style="left: 70%; animation-delay: 3s;">🦌</div>
+
+        <!-- 聖誕樹裝飾 -->
+        <div class="tree-decoration">🎄</div>
+        <div class="tree-decoration" style="left: 85%; top: 60%; animation-delay: 2s;">🎄</div>
+
+        <!-- 雪人裝飾 -->
+        <div class="snowman-decoration">⛄</div>
+        <div class="snowman-decoration" style="left: 25%; top: 70%; animation-delay: 4s;">⛄</div>
+    </div>
 
     <!-- Gift Opening Screen -->
     <div class="gift-opening-container" id="giftOpening">
